@@ -1,0 +1,11 @@
+{
+  "name": "Cashify Clone",
+  "short_name": "Cashify",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#00A389",
+  "theme_color": "#00A389",
+  "description": "Cashify ReCommerce & Doorstep Repairs Platform",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false
+}
