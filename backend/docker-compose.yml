@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cashify_api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:cashifypassword@postgres:5432/cashify_db
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=supersecretjwtsecretkeyreplaceinproduction_cashify_2026
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - cashify_network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: cashify_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: cashifypassword
+      POSTGRES_DB: cashify_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d cashify_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cashify_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: cashify_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cashify_network
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cashify_celery
+    restart: always
+    command: ["celery", "-A", "app.core.celery_app", "worker", "--loglevel=info"]
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:cashifypassword@postgres:5432/cashify_db
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - cashify_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  cashify_network:
+    driver: bridge

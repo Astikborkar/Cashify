@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cashify Clone — AI ReCommerce & Doorstep Repairs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00A389;
+      --primary-dark: #007A66;
+      --primary-light: #E0F5F1;
+      --secondary: #FFB800;
+      --secondary-dark: #D49B00;
+      --secondary-light: #FFF8E6;
+      --neutral-900: #1A1F2C;
+      --neutral-700: #4A5568;
+      --neutral-500: #718096;
+      --neutral-200: #E2E8F0;
+      --neutral-100: #F7FAFC;
+      --success: #10B981;
+      --danger: #EF4444;
+      --radius: 14px;
+      --shadow: 0 4px 20px rgba(0, 163, 137, 0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: #F8FAF9; color: var(--neutral-900); padding-bottom: 70px; }
+
+    /* Top App Bar */
+    header {
+      background: white;
+      border-bottom: 1px solid var(--neutral-200);
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 800; color: var(--primary); }
+    .brand span { color: var(--secondary-dark); }
+    .top-actions { display: flex; align-items: center; gap: 12px; }
+    .badge-api { background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+
+    /* Main Container */
+    .container { max-width: 900px; margin: 0 auto; padding: 20px 16px; }
+
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 1px solid var(--neutral-200);
+      display: flex; justify-content: space-around; padding: 8px 0; z-index: 100;
+    }
+    .nav-btn {
+      background: none; border: none; outline: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 600; color: var(--neutral-500); width: 20%;
+    }
+    .nav-btn.active { color: var(--primary); }
+    .nav-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* Views */
+    .view { display: none; }
+    .view.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Card styling */
+    .card {
+      background: white; border-radius: var(--radius); border: 1px solid var(--neutral-200);
+      padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow);
+    }
+    .banner {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white; border-radius: var(--radius); padding: 24px; margin-bottom: 20px;
+    }
+    .banner h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .banner p { font-size: 13px; opacity: 0.9; margin-bottom: 16px; line-height: 1.4; }
+
+    /* Buttons */
+    .btn {
+      background: var(--primary); color: white; border: none; border-radius: 10px;
+      padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { opacity: 0.92; transform: translateY(-1px); }
+    .btn-secondary { background: var(--secondary); color: var(--neutral-900); }
+    .btn-outline { background: white; color: var(--primary); border: 1px solid var(--primary); }
+    .btn-block { width: 100%; padding: 12px; }
+
+    /* Grid */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    /* Form Inputs */
+    label { font-size: 12px; font-weight: 700; color: var(--neutral-700); margin-bottom: 6px; display: block; }
+    select, input, textarea {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--neutral-200);
+      border-radius: 8px; font-size: 13px; margin-bottom: 14px; outline: none;
+    }
+    select:focus, input:focus, textarea:focus { border-color: var(--primary); }
+
+    /* Status Pill */
+    .pill { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .pill-success { background: #DCFCE7; color: #166534; }
+    .pill-warning { background: #FEF3C7; color: #92400E; }
+    .pill-primary { background: var(--primary-light); color: var(--primary-dark); }
+
+    /* Chat bubble */
+    .chat-box { max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; padding: 8px 0; }
+    .bubble { max-width: 80%; padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.4; }
+    .bubble-bot { background: white; border: 1px solid var(--neutral-200); align-self: flex-start; }
+    .bubble-user { background: var(--primary); color: white; align-self: flex-end; }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header>
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#00A389"/><path d="M2 17L12 22L22 17" stroke="#FFB800" stroke-width="2.5"/></svg>
+      CASHIFY<span>.ai</span>
+    </div>
+    <div class="top-actions">
+      <span class="badge-api">7 AI Agents Active</span>
+      <a href="/api/v1/docs" target="_blank" class="btn btn-outline" style="padding: 6px 12px; font-size: 11px;">Swagger API</a>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- TAB 1: HOME VIEW -->
+    <div id="view-home" class="view active">
+      <div class="banner">
+        <h2>Sell Old Phones & Get Paid Instantly</h2>
+        <p>Valuation powered by Gemini 2.5 Flash & LangGraph Multi-Agent Architecture. Free doorstep pickup & instant IMPS credit.</p>
+        <button class="btn btn-secondary" onclick="switchTab('sell')">Get Exact Phone Price</button>
+      </div>
+
+      <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Quick Services</h3>
+      <div class="grid-3" style="margin-bottom: 20px;">
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('sell')">
+          <div style="font-size: 28px; margin-bottom: 6px;">📱</div>
+          <strong style="font-size: 14px;">Sell Phone</strong>
+          <p style="font-size: 11px; color: var(--neutral-500); margin-top: 2px;">Instant AI Price Quote</p>
+        </div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('buy')">
+          <div style="font-size: 28px; margin-bottom: 6px;">✨</div>
+          <strong style="font-size: 14px;">Buy Refurbished</strong>
+          <p style="font-size: 11px; color: var(--neutral-500); margin-top: 2px;">1-Year Warranty</p>
+        </div>
+        <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('repair')">
+          <div style="font-size: 28px; margin-bottom: 6px;">🛠️</div>
+          <strong style="font-size: 14px;">Doorstep Repair</strong>
+          <p style="font-size: 11px; color: var(--neutral-500); margin-top: 2px;">Fixed in 30 Mins</p>
+        </div>
+      </div>
+
+      <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Autonomous 7-Agent Swarm Status</h3>
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <strong>Agent 1: Pricing AI Valuation</strong> <span class="pill pill-success">Sub-500ms SLA</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <strong>Agent 2: Diagnostics QC Evaluator</strong> <span class="pill pill-success">16 Tests Ready</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <strong>Agent 3: Fraud & Stolen Phone Shield</strong> <span class="pill pill-success">GSMA Sync Active</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <strong>Agent 4: Repair Cost Estimator</strong> <span class="pill pill-success">15% Combo Engine</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <strong>Agent 5: Trade-in Matchmaker</strong> <span class="pill pill-success">Recommendation Active</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong>Agent 6: 24/7 Support Chatbot</strong> <span class="pill pill-primary">Human Escalation Ready</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: SELL FLOW (AI VALUATION ENGINE) -->
+    <div id="view-sell" class="view">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 14px;">Agent 1: Instant AI Price Valuation</h2>
+        
+        <div class="grid-2">
+          <div>
+            <label>Brand</label>
+            <select id="sell-brand" onchange="updateModels()">
+              <option value="Apple">Apple</option>
+              <option value="Samsung">Samsung</option>
+              <option value="OnePlus">OnePlus</option>
+            </select>
+          </div>
+          <div>
+            <label>Model</label>
+            <select id="sell-model">
+              <option value="iPhone 13">iPhone 13 (128GB)</option>
+              <option value="iPhone 14">iPhone 14 (128GB)</option>
+              <option value="iPhone 12">iPhone 12 (128GB)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label>Screen Condition</label>
+            <select id="sell-screen">
+              <option value="flawless">Flawless (No scratches)</option>
+              <option value="minor_scratches">Minor Micro-scratches</option>
+              <option value="cracked">Cracked / Broken Glass (-35%)</option>
+            </select>
+          </div>
+          <div>
+            <label>Battery Health (%)</label>
+            <input type="number" id="sell-battery" value="82" min="50" max="100">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label>Accessories Available</label>
+            <select id="sell-acc">
+              <option value="both">Original Box & OEM Charger (+5%)</option>
+              <option value="none">Device Only (No accessories)</option>
+            </select>
+          </div>
+          <div>
+            <label>Valid Retail Invoice</label>
+            <select id="sell-bill">
+              <option value="yes">Yes, have valid GST Invoice (+3%)</option>
+              <option value="no">No bill</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-block" onclick="calculateQuote()">Run Valuation Inference</button>
+      </div>
+
+      <!-- Quote Output Card -->
+      <div id="quote-result-card" class="card" style="display: none; border-left: 5px solid var(--primary);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div>
+            <span style="font-size: 12px; color: var(--neutral-500);">Final Guaranteed Offer Price</span>
+            <div id="quote-final-price" style="font-size: 28px; font-weight: 900; color: var(--primary);">₹27,400</div>
+          </div>
+          <span class="pill pill-success" id="quote-priority">EXPRESS_ELIGIBLE</span>
+        </div>
+        <p style="font-size: 12px; color: var(--neutral-700); margin-bottom: 12px;">Price locked for <strong>7 days</strong> with 96% AI confidence score.</p>
+        
+        <h4 style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Deductions & Bonuses Breakdown</h4>
+        <div id="quote-breakdown-list" style="font-size: 12px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px;"></div>
+
+        <button class="btn btn-secondary btn-block" onclick="alert('Pickup scheduled for tomorrow! Verification OTP: 4819')">Book Free Doorstep Pickup</button>
+      </div>
+    </div>
+
+    <!-- TAB 3: BUY REFURBISHED -->
+    <div id="view-buy" class="view">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="font-size: 18px; font-weight: 800;">Certified Refurbished Devices</h2>
+        <span class="pill pill-primary">32 Quality Checks Passed</span>
+      </div>
+
+      <div class="grid-2" id="buy-catalog-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- TAB 4: DOORSTEP REPAIR & LIVE TRACKER -->
+    <div id="view-repair" class="view">
+      <div class="card">
+        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 12px;">Doorstep Repair Booking</h2>
+        <p style="font-size: 13px; color: var(--neutral-700); margin-bottom: 14px;">Select issues to calculate estimate with <strong>15% combo bundle discount</strong> on multi-repairs.</p>
+
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;">
+          <input type="checkbox" id="rep-screen" checked onchange="updateRepairEstimate()"> Touch Screen Glass Replacement (₹1,999)
+        </label>
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;">
+          <input type="checkbox" id="rep-battery" checked onchange="updateRepairEstimate()"> OEM Certified Battery (₹1,499)
+        </label>
+        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 13px;">
+          <input type="checkbox" id="rep-camera" onchange="updateRepairEstimate()"> Rear Camera Glass Replacement (₹699)
+        </label>
+
+        <div style="background: var(--neutral-100); border-radius: 8px; padding: 12px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
+            <span>Subtotal:</span> <span id="rep-subtotal">₹3,498</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--success); font-weight: 700; margin-bottom: 4px;">
+            <span>15% Multi-Issue Combo Discount:</span> <span id="rep-discount">-₹135</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 800; margin-top: 6px; border-top: 1px solid var(--neutral-200); padding-top: 6px;">
+            <span>Total Payable:</span> <span id="rep-total" style="color: var(--primary);">₹3,363</span>
+          </div>
+        </div>
+
+        <button class="btn btn-block" onclick="startTrackingSimulation()">Book Repair & Track Technician</button>
+      </div>
+
+      <!-- Live Technician Tracking Card -->
+      <div id="repair-tracking-card" class="card" style="display: none; border-left: 5px solid var(--secondary);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h3 style="font-size: 15px; font-weight: 800;">🛵 Technician En Route</h3>
+          <span class="pill pill-warning" id="tracking-eta">ETA: 24 mins</span>
+        </div>
+        <p style="font-size: 13px; margin-bottom: 6px;">Technician <strong>Rajesh Kumar</strong> (⭐ 4.9 • 1,420 repairs completed)</p>
+        <p style="font-size: 12px; color: var(--neutral-500); margin-bottom: 12px;">Service Handover OTP: <strong style="color: var(--primary); font-size: 14px;">4819</strong></p>
+        <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 10px; font-size: 12px; color: #92400E;">
+          Live GPS simulation active. Expected doorstep arrival in Bangalore Indiranagar.
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: MY ACCOUNT & AGENT 6 AI SUPPORT -->
+    <div id="view-profile" class="view">
+      <!-- Wallet Card -->
+      <div class="card" style="background: linear-gradient(135deg, var(--neutral-900), #2D3748); color: white;">
+        <span style="font-size: 12px; opacity: 0.8;">Cashify Wallet Balance</span>
+        <div style="font-size: 32px; font-weight: 900; margin: 6px 0;">₹3,250.00</div>
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          <button class="btn btn-secondary" onclick="alert('Instant IMPS payout of ₹3,250 transferred to UPI: rahul@okhdfcbank')">Instant IMPS Withdraw</button>
+          <button class="btn btn-outline" style="border-color: white; color: white;" onclick="alert('Referral Code: RAHUL500 (Earn ₹500/invite)')">Refer & Earn ₹500</button>
+        </div>
+      </div>
+
+      <!-- Live Agent 6 Chatbot Card -->
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="font-size: 15px; font-weight: 800;">Agent 6: 24/7 AI Customer Support</h3>
+          <span class="pill pill-success">Gemini 2.5 Active</span>
+        </div>
+
+        <div class="chat-box" id="chat-messages">
+          <div class="bubble bubble-bot">Hello Rahul! 👋 I am your Cashify AI Assistant. You can ask me about order #REP-84920, wallet payout status, or request pickup rescheduling.</div>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="chat-input" placeholder="Type your query here..." style="margin-bottom: 0;" onkeypress="if(event.key==='Enter') sendChat()">
+          <button class="btn" onclick="sendChat()">Send</button>
+        </div>
+        <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+          <button class="badge-api" style="border: none; cursor: pointer;" onclick="quickChat('Track my order REP-84920')">Track #REP-84920</button>
+          <button class="badge-api" style="border: none; cursor: pointer;" onclick="quickChat('When will I get my payout?')">Payout Status</button>
+          <button class="badge-api" style="border: none; cursor: pointer;" onclick="quickChat('I want to speak with a human agent')">Talk to Human</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Nav Tabs -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" onclick="switchTab('home')">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </button>
+    <button class="nav-btn" onclick="switchTab('sell')">
+      <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+      Sell Old
+    </button>
+    <button class="nav-btn" onclick="switchTab('buy')">
+      <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+      Buy Store
+    </button>
+    <button class="nav-btn" onclick="switchTab('repair')">
+      <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+      Repair
+    </button>
+    <button class="nav-btn" onclick="switchTab('profile')">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+      Account
+    </button>
+  </nav>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('view-' + tabId).classList.add('active');
+      const idx = ['home', 'sell', 'buy', 'repair', 'profile'].indexOf(tabId);
+      document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // Agent 1: Pricing AI Valuation
+    async function calculateQuote() {
+      const brand = document.getElementById('sell-brand').value;
+      const model = document.getElementById('sell-model').value;
+      const screen = document.getElementById('sell-screen').value;
+      const battery = parseInt(document.getElementById('sell-battery').value) || 85;
+      const acc = document.getElementById('sell-acc').value;
+      const bill = document.getElementById('sell-bill').value;
+
+      const payload = {
+        device: {
+          brand: brand,
+          model: model,
+          variant: { ram_gb: 4, storage_gb: 128 },
+          purchase_year: 2022,
+          has_original_box: acc === 'both',
+          has_original_charger: acc === 'both',
+          has_valid_bill: bill === 'yes'
+        },
+        condition: {
+          screen: screen,
+          body: "flawless",
+          functional_issues: []
+        },
+        diagnostic_telemetry: {
+          touch_matrix_coverage: 1.0,
+          dead_pixels_detected: 0,
+          battery_health_percentage: battery,
+          camera_front_working: true,
+          camera_rear_working: true,
+          biometrics_working: true
+        },
+        market_context: {
+          pincode: "560001",
+          city: "Bengaluru",
+          current_refurbished_mkt_avg: model.includes('14') ? 42000 : 35000
+        }
+      };
+
+      try {
+        const res = await fetch('/api/v1/agents/pricing/quote', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        const quote = data.quote;
+
+        document.getElementById('quote-final-price').innerText = '₹' + quote.final_offer_price.toLocaleString('en-IN');
+        document.getElementById('quote-priority').innerText = quote.pickup_priority;
+
+        const list = document.getElementById('quote-breakdown-list');
+        list.innerHTML = '';
+        quote.price_breakdown.forEach(item => {
+          const isPos = item.adjustment >= 0;
+          const div = document.createElement('div');
+          div.style.display = 'flex';
+          div.style.justifyContent = 'space-between';
+          div.innerHTML = `<span>${item.item}</span><strong style="color: ${isPos ? 'var(--success)' : 'var(--danger)'}">${isPos ? '+' : ''}₹${Math.abs(item.adjustment).toLocaleString('en-IN')}</strong>`;
+          list.appendChild(div);
+        });
+
+        document.getElementById('quote-result-card').style.display = 'block';
+        document.getElementById('quote-result-card').scrollIntoView({ behavior: 'smooth' });
+      } catch (err) {
+        alert('Failed to connect to Pricing AI Agent: ' + err);
+      }
+    }
+
+    // Refurbished Catalog rendering
+    const REFURBISHED = [
+      { id: '1', title: 'iPhone 13 (128GB - Midnight)', grade: 'SUPERB', price: 38999, mrp: 59900, emoji: '📱' },
+      { id: '2', title: 'Galaxy S22 5G (128GB)', grade: 'SUPERB', price: 29999, mrp: 72999, emoji: '✨' },
+      { id: '3', title: 'MacBook Air M1 (256GB)', grade: 'SUPERB', price: 54999, mrp: 99900, emoji: '💻' },
+      { id: '4', title: 'OnePlus 11R 5G (128GB)', grade: 'GOOD', price: 24999, mrp: 39999, emoji: '⚡' }
+    ];
+
+    function renderBuyCatalog() {
+      const container = document.getElementById('buy-catalog-list');
+      container.innerHTML = '';
+      REFURBISHED.forEach(item => {
+        container.innerHTML += `
+          <div class="card">
+            <div style="font-size: 38px; text-align: center; margin-bottom: 8px;">${item.emoji}</div>
+            <span class="pill pill-success" style="margin-bottom: 6px;">${item.grade} GRADE</span>
+            <strong style="font-size: 14px; display: block; margin-bottom: 4px;">${item.title}</strong>
+            <div style="display: flex; gap: 8px; align-items: baseline; margin-bottom: 12px;">
+              <span style="font-size: 18px; font-weight: 800; color: var(--primary);">₹${item.price.toLocaleString('en-IN')}</span>
+              <span style="font-size: 12px; color: var(--neutral-500); text-decoration: line-through;">₹${item.mrp.toLocaleString('en-IN')}</span>
+            </div>
+            <button class="btn btn-outline btn-block" onclick="alert('Added ${item.title} to Cart!')">Add to Cart</button>
+          </div>
+        `;
+      });
+    }
+    renderBuyCatalog();
+
+    // Repair Estimate Multi-issue calculator
+    function updateRepairEstimate() {
+      let sub = 0;
+      let labor = 0;
+      let count = 0;
+      if (document.getElementById('rep-screen').checked) { sub += 1999; labor += 500; count++; }
+      if (document.getElementById('rep-battery').checked) { sub += 1499; labor += 400; count++; }
+      if (document.getElementById('rep-camera').checked) { sub += 699; labor += 300; count++; }
+
+      const discount = count > 1 ? Math.round(labor * 0.15) : 0;
+      const total = Math.max(499, sub - discount);
+
+      document.getElementById('rep-subtotal').innerText = '₹' + sub.toLocaleString('en-IN');
+      document.getElementById('rep-discount').innerText = '-₹' + discount.toLocaleString('en-IN');
+      document.getElementById('rep-total').innerText = '₹' + total.toLocaleString('en-IN');
+    }
+
+    function startTrackingSimulation() {
+      const card = document.getElementById('repair-tracking-card');
+      card.style.display = 'block';
+      card.scrollIntoView({ behavior: 'smooth' });
+
+      let eta = 24;
+      const timer = setInterval(() => {
+        eta -= 2;
+        if (eta <= 2) {
+          document.getElementById('tracking-eta').innerText = 'Arrived at Doorstep!';
+          clearInterval(timer);
+        } else {
+          document.getElementById('tracking-eta').innerText = `ETA: ${eta} mins`;
+        }
+      }, 3000);
+    }
+
+    // Agent 6: Support Chatbot
+    async function sendChat(customText) {
+      const input = document.getElementById('chat-input');
+      const text = customText || input.value.trim();
+      if (!text) return;
+      if (!customText) input.value = '';
+
+      const box = document.getElementById('chat-messages');
+      box.innerHTML += `<div class="bubble bubble-user">${text}</div>`;
+      box.scrollTop = box.scrollHeight;
+
+      try {
+        const res = await fetch('/api/v1/agents/support/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: 'usr-web', message: text, active_order_id: 'REP-84920' })
+        });
+        const data = await res.json();
+        box.innerHTML += `<div class="bubble bubble-bot">${data.reply.replace(/\\n/g, '<br>')}</div>`;
+        box.scrollTop = box.scrollHeight;
+      } catch (e) {
+        box.innerHTML += `<div class="bubble bubble-bot">Could not connect to support service.</div>`;
+      }
+    }
+
+    function quickChat(text) {
+      sendChat(text);
+    }
+
+    function updateModels() {
+      const brand = document.getElementById('sell-brand').value;
+      const modelSelect = document.getElementById('sell-model');
+      if (brand === 'Apple') {
+        modelSelect.innerHTML = '<option value="iPhone 13">iPhone 13 (128GB)</option><option value="iPhone 14">iPhone 14 (128GB)</option><option value="iPhone 12">iPhone 12 (128GB)</option>';
+      } else if (brand === 'Samsung') {
+        modelSelect.innerHTML = '<option value="Galaxy S22">Galaxy S22 (128GB)</option><option value="Galaxy S23 Ultra">Galaxy S23 Ultra (256GB)</option>';
+      } else {
+        modelSelect.innerHTML = '<option value="OnePlus 11R">OnePlus 11R (128GB)</option><option value="OnePlus 9 Pro">OnePlus 9 Pro (128GB)</option>';
+      }
+    }
+  </script>
+</body>
+</html>
