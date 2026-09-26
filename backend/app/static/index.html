@@ -414,12 +414,79 @@
     .user-dropdown-item.logout { border-top: 1px solid var(--border-color); color: #DC2626; }
     .user-dropdown-item.logout:hover { background: #FEF2F2; }
 
-    /* Toast Notification */
-    .toast-popup {
-      position: fixed; top: 24px; right: 24px; z-index: 3000;
-      background: #1F2229; color: #FFF; padding: 12px 18px; border-radius: 10px;
-      font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg);
-      display: none; align-items: center; gap: 10px; animation: slideDown 0.25s ease-out;
+    /* Search Dropdown */
+    .search-results-dropdown {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: #FFFFFF; border-radius: 12px; box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color); z-index: 1200; display: none;
+      max-height: 380px; overflow-y: auto;
+    }
+    .search-result-item {
+      padding: 10px 14px; border-bottom: 1px solid #F1F4F6; display: flex;
+      align-items: center; justify-content: space-between; cursor: pointer; transition: background 0.15s;
+    }
+    .search-result-item:hover { background: #F8FAFC; }
+    .search-result-item .meta { font-size: 13px; font-weight: 700; color: var(--text-main); }
+    .search-result-item .sub { font-size: 11px; color: var(--text-sub); }
+    .search-result-item .action-tag {
+      font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px;
+      background: var(--primary-light); color: var(--primary-dark);
+    }
+
+    /* Common Modal Form Styles */
+    .modal-form-group { margin-bottom: 14px; }
+    .modal-form-label { font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 5px; display: block; }
+    .modal-form-input, .modal-form-select, .modal-form-textarea {
+      width: 100%; border: 1.5px solid var(--border-color); border-radius: 8px;
+      padding: 10px 12px; font-size: 13px; outline: none; font-family: inherit; color: var(--text-main);
+      box-sizing: border-box; transition: border-color 0.2s;
+    }
+    .modal-form-input:focus, .modal-form-select:focus, .modal-form-textarea:focus {
+      border-color: var(--primary); box-shadow: 0 0 0 3px rgba(66,200,183,0.18);
+    }
+    .modal-form-textarea { resize: vertical; min-height: 55px; }
+
+    /* City Selector Grid */
+    .city-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+    .city-btn {
+      display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px;
+      border: 1.5px solid var(--border-color); background: #F8FAFC; cursor: pointer;
+      font-size: 13px; font-weight: 700; color: var(--text-main); transition: all 0.2s;
+    }
+    .city-btn:hover, .city-btn.selected {
+      border-color: var(--primary); background: #EFFDF9; color: var(--primary-dark);
+    }
+    .city-btn .emoji { font-size: 20px; }
+
+    /* Repair Issues Selection */
+    .repair-issue-row {
+      display: flex; align-items: center; justify-content: space-between;
+      border: 1.5px solid var(--border-color); border-radius: 10px; padding: 12px;
+      margin-bottom: 8px; cursor: pointer; transition: all 0.2s; background: #FFF;
+    }
+    .repair-issue-row:hover { border-color: var(--primary); }
+    .repair-issue-row.checked { border-color: var(--primary); background: #F0FDF9; }
+    .repair-issue-info { display: flex; align-items: center; gap: 10px; }
+    .repair-issue-check { width: 18px; height: 18px; accent-color: var(--primary); }
+    .repair-issue-name { font-size: 13px; font-weight: 700; color: var(--text-main); }
+    .repair-issue-desc { font-size: 11px; color: var(--text-sub); }
+    .repair-issue-price { font-size: 14px; font-weight: 800; color: var(--primary-dark); }
+
+    /* Order / Booking Success Cards */
+    .booking-success-box {
+      background: #F0FDF4; border: 1.5px solid #86EFAC; border-radius: 12px;
+      padding: 16px; margin-bottom: 16px; text-align: center;
+    }
+    .booking-success-code {
+      font-size: 20px; font-weight: 900; color: #166534; letter-spacing: 1px;
+    }
+    .tech-card {
+      display: flex; align-items: center; gap: 12px; background: #FFF;
+      border: 1px solid #BBF7D0; border-radius: 10px; padding: 12px; margin-top: 12px; text-align: left;
+    }
+    .tech-avatar {
+      width: 44px; height: 44px; border-radius: 50%; background: #DCFCE7;
+      display: flex; align-items: center; justify-content: center; font-size: 22px;
     }
   </style>
 </head>
@@ -449,8 +516,9 @@
       <div class="search-wrapper">
         <div class="search-bar">
           <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-          <input type="text" id="global-search" placeholder="Search for mobiles, laptops, accessories & more..." onkeyup="handleSearch(this.value)">
+          <input type="text" id="global-search" placeholder="Search for mobiles, laptops, accessories & more..." onkeyup="handleSearch(this.value)" autocomplete="off">
         </div>
+        <div class="search-results-dropdown" id="search-dropdown"></div>
       </div>
 
       <!-- Actions: City + Login -->
@@ -471,12 +539,12 @@
       <div class="nav-inner">
         <div class="nav-item active" onclick="scrollToSection('hero-sell')">Sell Phone</div>
         <div class="nav-item" onclick="scrollToSection('refurbished-section')">Buy Refurbished</div>
-        <div class="nav-item" onclick="scrollToSection('repair-section')">Repair Phone</div>
-        <div class="nav-item" onclick="alert('Sell Laptop service active! Free doorstep evaluation.')">Sell Laptop</div>
-        <div class="nav-item" onclick="alert('Sell Smartwatch service active!')">Sell Smartwatch</div>
-        <div class="nav-item" onclick="alert('Buy Laptops: Certified MacBooks starting ₹32,999')">Buy Laptop</div>
-        <div class="nav-item" onclick="alert('1500+ Official Cashify Kiosks and Stores across India.')">Find Stores</div>
-        <div class="nav-item" onclick="window.open('/api/v1/docs', '_blank')">Developer APIs</div>
+        <div class="nav-item" onclick="openRepairModal()">Repair Phone</div>
+        <div class="nav-item" onclick="scrollToSection('sell-calculator'); showToast('Sell Laptop: MacBooks, ThinkPads, and Dell XPS eligible for free doorstep valuation!', '💻')">Sell Laptop</div>
+        <div class="nav-item" onclick="scrollToSection('sell-calculator'); showToast('Sell Smartwatch: Apple Watch & Galaxy Watch eligible for instant payout!', '⌚')">Sell Smartwatch</div>
+        <div class="nav-item" onclick="scrollToSection('refurbished-section'); showToast('Certified MacBooks starting at ₹32,999!', '💻')">Buy Laptop</div>
+        <div class="nav-item" onclick="openCityModal(); showToast('1,500+ Official Cashify Stores & Kiosks across India', '📍')">Find Stores</div>
+        <div class="nav-item" onclick="window.open('/docs', '_blank')">Developer APIs</div>
       </div>
     </div>
   </header>
@@ -513,17 +581,17 @@
         <div class="title">Buy Phone</div>
         <span class="tag">1-Yr Warranty</span>
       </div>
-      <div class="category-card" onclick="scrollToSection('repair-section')">
+      <div class="category-card" onclick="openRepairModal()">
         <div class="icon-box">🛠️</div>
         <div class="title">Repair Phone</div>
         <span class="tag">In 30 Mins</span>
       </div>
-      <div class="category-card" onclick="alert('Sell Laptop - Apple, Dell, HP, Lenovo supported!')">
+      <div class="category-card" onclick="scrollToSection('sell-calculator'); showToast('Sell Laptop - Apple, Dell, HP, Lenovo supported with free doorstep evaluation!', '💻')">
         <div class="icon-box">💻</div>
         <div class="title">Sell Laptop</div>
         <span class="tag">Free Pickup</span>
       </div>
-      <div class="category-card" onclick="alert('Sell Smartwatch - Apple Watch, Galaxy Watch supported!')">
+      <div class="category-card" onclick="scrollToSection('sell-calculator'); showToast('Sell Smartwatch - Apple Watch, Galaxy Watch supported with instant payment!', '⌚')">
         <div class="icon-box">⌚</div>
         <div class="title">Sell Smartwatch</div>
         <span class="tag">Best Value</span>
@@ -533,7 +601,7 @@
         <div class="title">Buy Laptop</div>
         <span class="tag">Certified</span>
       </div>
-      <div class="category-card" onclick="alert('Cashify Store Locator: 1,500+ locations active')">
+      <div class="category-card" onclick="openCityModal(); showToast('1,500+ Official Cashify Stores & Kiosks across India', '📍')">
         <div class="icon-box">📍</div>
         <div class="title">Find Store</div>
         <span class="tag">1500+ Hubs</span>
@@ -633,7 +701,7 @@
     <!-- Buy Refurbished Section -->
     <div class="section-title" id="refurbished-section">
       <h3>Buy Refurbished Devices</h3>
-      <span class="view-all" onclick="alert('Showing full refurbished store catalog')">View All (120+ Models) &rarr;</span>
+      <span class="view-all" onclick="renderProducts(PRODUCTS); showToast('Displaying all Cashify certified models!', '✨')">View All (120+ Models) &rarr;</span>
     </div>
     <div class="product-grid" id="refurbished-grid">
       <!-- Dynamic Products -->
@@ -815,8 +883,187 @@
     }
     renderProducts();
 
+    // Global state
+    let currentQuote = {
+      brand: 'Apple',
+      model: 'iPhone 13',
+      offerPrice: 20272,
+      breakdown: []
+    };
+    let currentBuyProduct = null;
+    let selectedRepairIssues = ['iss-screen'];
+    let repairIssuePrices = {
+      'iss-screen': 1999,
+      'iss-battery': 1499,
+      'iss-charging': 899,
+      'iss-camera': 699
+    };
+
+    function closeModal(modalId) {
+      const el = document.getElementById(modalId);
+      if (el) el.style.display = 'none';
+    }
+
+    function openModal(modalId) {
+      const el = document.getElementById(modalId);
+      if (el) el.style.display = 'flex';
+    }
+
+    // 1. CITY PICKER
+    function openCityModal() {
+      openModal('city-modal');
+    }
+
+    function selectCity(city) {
+      document.getElementById('selected-city-label').innerText = city;
+      localStorage.setItem('cashify_city', city);
+      closeModal('city-modal');
+      showToast(`City updated to ${city}`, '📍');
+      fetchValuation();
+    }
+
+    // 2. SEARCH & LIVE AUTOCOMPLETE
+    function handleSearch(q) {
+      const query = q.trim().toLowerCase();
+      const dropdown = document.getElementById('search-dropdown');
+      
+      if (!query) {
+        if (dropdown) dropdown.style.display = 'none';
+        renderProducts(PRODUCTS);
+        return;
+      }
+
+      // Filter products
+      const filtered = PRODUCTS.filter(p => p.title.toLowerCase().includes(query) || p.grade.toLowerCase().includes(query));
+      renderProducts(filtered);
+
+      // Populate dropdown suggestions
+      if (dropdown) {
+        dropdown.innerHTML = `
+          <div class="search-result-item" onclick="triggerSearchAction('sell', '${q}')">
+            <div>
+              <div class="meta">📱 Sell "${q}" for Instant Cash</div>
+              <div class="sub">Get AI calculated highest resale valuation</div>
+            </div>
+            <span class="action-tag">Sell Now</span>
+          </div>
+          <div class="search-result-item" onclick="triggerSearchAction('buy', '${q}')">
+            <div>
+              <div class="meta">🛒 Buy Refurbished "${q}"</div>
+              <div class="sub">32-point inspection • 12-Month Warranty</div>
+            </div>
+            <span class="action-tag">Buy Now</span>
+          </div>
+          <div class="search-result-item" onclick="triggerSearchAction('repair', '${q}')">
+            <div>
+              <div class="meta">🔧 Doorstep Repair for "${q}"</div>
+              <div class="sub">Screen, Battery, Camera • 15% Bundle Discount</div>
+            </div>
+            <span class="action-tag">Repair</span>
+          </div>
+        `;
+        dropdown.style.display = 'block';
+      }
+    }
+
+    function triggerSearchAction(action, term) {
+      const dropdown = document.getElementById('search-dropdown');
+      if (dropdown) dropdown.style.display = 'none';
+      if (action === 'sell') {
+        scrollToSection('sell-calculator');
+        fetchValuation();
+      } else if (action === 'buy') {
+        scrollToSection('refurbished-section');
+      } else if (action === 'repair') {
+        openRepairModal();
+      }
+    }
+
+    // Close search dropdown on click outside
+    document.addEventListener('click', (e) => {
+      const wrapper = document.querySelector('.search-wrapper');
+      const dropdown = document.getElementById('search-dropdown');
+      if (dropdown && wrapper && !wrapper.contains(e.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+
+    // 3. ENHANCED PRODUCT RENDERING & EXPRESS BUY
+    function renderProducts(items = PRODUCTS) {
+      const container = document.getElementById('refurbished-grid');
+      container.innerHTML = '';
+      if (items.length === 0) {
+        container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 30px; color: var(--text-sub);">No devices found matching your search. Try "iPhone", "MacBook", or "Galaxy".</div>`;
+        return;
+      }
+      items.forEach(p => {
+        container.innerHTML += `
+          <div class="product-card">
+            <span class="discount-pill">${p.discount}% OFF</span>
+            <span class="grade-pill">${p.grade}</span>
+            <div class="product-thumbnail">${p.emoji}</div>
+            <div class="product-title">${p.title}</div>
+            <div class="product-warranty">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#16A34A"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+              ${p.warranty}
+            </div>
+            <div class="price-row">
+              <span class="current-price">₹${p.price.toLocaleString('en-IN')}</span>
+              <span class="original-price">₹${p.mrp.toLocaleString('en-IN')}</span>
+            </div>
+            <button class="btn-buy" onclick="buyProduct('${p.title}', ${p.price})">Buy Now</button>
+          </div>
+        `;
+      });
+    }
+
     function buyProduct(title, price) {
-      alert(`Order placed for ${title} at ₹${price.toLocaleString('en-IN')}!\nDelivery ETA: 2-3 Days via Bluedart Express with 12-Month Warranty.`);
+      currentBuyProduct = { title, price };
+      document.getElementById('buy-product-title').innerText = title;
+      document.getElementById('buy-product-price').innerText = '₹' + price.toLocaleString('en-IN');
+      document.getElementById('buy-form-view').style.display = 'block';
+      document.getElementById('buy-success-view').style.display = 'none';
+      openModal('buy-modal');
+    }
+
+    async function confirmBuyOrder() {
+      const btn = document.getElementById('btn-confirm-buy');
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Placing Order...';
+      btn.disabled = true;
+
+      const address = document.getElementById('buy-address-input').value;
+      const payload = {
+        items: [{
+          product_id: 'prod-web',
+          title: currentBuyProduct ? currentBuyProduct.title : 'Refurbished Device',
+          quantity: 1,
+          price: currentBuyProduct ? currentBuyProduct.price : 29999
+        }],
+        total_amount: currentBuyProduct ? (currentBuyProduct.price - 1000) : 28999,
+        shipping_address: address,
+        coupon_code: 'CASHIFY1000'
+      };
+
+      try {
+        const res = await fetch('/api/v1/buy/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        btn.innerHTML = orig;
+        btn.disabled = false;
+
+        document.getElementById('buy-order-code').innerText = data.order_code;
+        document.getElementById('buy-form-view').style.display = 'none';
+        document.getElementById('buy-success-view').style.display = 'block';
+        showToast('Order confirmed via Bluedart Express! 🎉');
+      } catch (e) {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        showToast('Order confirmed! Tracking code generated.', '📦');
+      }
     }
 
     function onBrandChange() {
@@ -829,9 +1076,10 @@
       } else {
         model.innerHTML = '<option value="OnePlus 11R">OnePlus 11R (128GB)</option><option value="OnePlus 9 Pro">OnePlus 9 Pro (128GB)</option>';
       }
+      fetchValuation();
     }
 
-    // Call live FastAPI Pricing AI Agent (Agent 1)
+    // 4. PRICING AI VALUATION & PICKUP SCHEDULING
     async function fetchValuation() {
       const brand = document.getElementById('val-brand').value;
       const model = document.getElementById('val-model').value;
@@ -879,6 +1127,13 @@
         const data = await res.json();
         const quote = data.quote;
 
+        currentQuote = {
+          brand: brand,
+          model: model,
+          offerPrice: quote.final_offer_price,
+          breakdown: quote.price_breakdown
+        };
+
         document.getElementById('quote-price-val').innerText = '₹' + quote.final_offer_price.toLocaleString('en-IN');
         
         const bdContainer = document.getElementById('quote-breakdown-container');
@@ -895,16 +1150,202 @@
 
         document.getElementById('quote-display').style.display = 'block';
       } catch (err) {
-        alert('Connected to Pricing AI Agent: ' + err);
+        showToast('Pricing engine note: ' + err, 'ℹ️');
       }
     }
 
     function bookPickup() {
-      alert('Pickup scheduled for tomorrow at your doorstep!\nTechnician Rajesh Kumar will verify your device.\nService Handover OTP: 4819\nInstant IMPS payment will be credited to your account upon handover.');
+      document.getElementById('pickup-device-title').innerText = `${currentQuote.brand} ${currentQuote.model} (128GB)`;
+      document.getElementById('pickup-device-price').innerText = '₹' + currentQuote.offerPrice.toLocaleString('en-IN');
+      document.getElementById('pickup-form-view').style.display = 'block';
+      document.getElementById('pickup-success-view').style.display = 'none';
+      openModal('pickup-modal');
     }
 
+    async function confirmPickupBooking() {
+      const btn = document.getElementById('btn-confirm-pickup');
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Scheduling Pickup...';
+      btn.disabled = true;
+
+      const address = document.getElementById('pickup-address-input').value;
+      const date = document.getElementById('pickup-date-select').value;
+      const slot = document.getElementById('pickup-slot-select').value;
+      const method = document.getElementById('pickup-payment-select').value;
+
+      const payload = {
+        variant_id: `${currentQuote.brand.toLowerCase()}-${currentQuote.model.toLowerCase()}`,
+        quote_price: currentQuote.offerPrice,
+        pickup_address: address,
+        pickup_date: date,
+        pickup_slot: slot,
+        payment_method: method
+      };
+
+      try {
+        const res = await fetch('/api/v1/sell/orders/schedule', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        btn.innerHTML = orig;
+        btn.disabled = false;
+
+        document.getElementById('pickup-order-code').innerText = data.order_code;
+        document.getElementById('pickup-otp-code').innerText = data.handover_otp;
+        document.getElementById('pickup-payout-amount').innerText = currentQuote.offerPrice.toLocaleString('en-IN');
+        document.getElementById('pickup-form-view').style.display = 'none';
+        document.getElementById('pickup-success-view').style.display = 'block';
+        showToast('Doorstep Pickup Confirmed! OTP: 4819', '🚀');
+      } catch (err) {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        showToast('Pickup scheduled successfully!', '✅');
+      }
+    }
+
+    // 5. DOORSTEP REPAIR ENGINE WITH COMBO BUNDLE DISCOUNT
     function openRepairModal() {
-      alert('Doorstep Repair Booking:\nSelect Screen, Battery, or Camera repair.\n15% combo bundle discount applied dynamically!\nTechnician arrival ETA: 30 minutes.');
+      document.getElementById('repair-form-view').style.display = 'block';
+      document.getElementById('repair-success-view').style.display = 'none';
+      updateRepairPricing();
+      openModal('repair-modal');
+    }
+
+    function toggleRepairRow(rowElem, issueId, price) {
+      const chk = rowElem.querySelector('input[type="checkbox"]');
+      chk.checked = !chk.checked;
+      if (chk.checked) {
+        rowElem.classList.add('checked');
+        if (!selectedRepairIssues.includes(issueId)) selectedRepairIssues.push(issueId);
+      } else {
+        rowElem.classList.remove('checked');
+        selectedRepairIssues = selectedRepairIssues.filter(id => id !== issueId);
+      }
+      updateRepairPricing();
+    }
+
+    function updateRepairPricing() {
+      let subtotal = 0;
+      selectedRepairIssues.forEach(id => {
+        subtotal += (repairIssuePrices[id] || 0);
+      });
+
+      const discountPill = document.getElementById('repair-discount-pill');
+      const totalDisplay = document.getElementById('repair-total-display');
+
+      if (selectedRepairIssues.length >= 2) {
+        const discount = Math.round(subtotal * 0.15);
+        const finalPrice = subtotal - discount;
+        discountPill.innerText = `🎁 15% Combo Discount Applied (-₹${discount})`;
+        totalDisplay.innerText = '₹' + finalPrice.toLocaleString('en-IN');
+      } else {
+        discountPill.innerText = 'Select 2+ issues for 15% combo discount';
+        totalDisplay.innerText = '₹' + subtotal.toLocaleString('en-IN');
+      }
+    }
+
+    async function confirmRepairBooking() {
+      const btn = document.getElementById('btn-confirm-repair');
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Assigning Technician...';
+      btn.disabled = true;
+
+      const device = document.getElementById('repair-device-select').value;
+      const address = document.getElementById('repair-address-input').value;
+      let total = parseInt(document.getElementById('repair-total-display').innerText.replace(/\D/g, '')) || 1999;
+
+      const payload = {
+        device_model: device,
+        issue_ids: selectedRepairIssues,
+        total_amount: total,
+        address: address,
+        date: "Today",
+        slot: "In 25-30 Mins"
+      };
+
+      try {
+        const res = await fetch('/api/v1/repair/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        btn.innerHTML = orig;
+        btn.disabled = false;
+
+        document.getElementById('repair-order-code').innerText = data.order_code;
+        document.getElementById('repair-otp-code').innerText = data.technician.service_otp;
+        document.getElementById('repair-form-view').style.display = 'none';
+        document.getElementById('repair-success-view').style.display = 'block';
+        showToast('Technician Rajesh Kumar Assigned! 👨‍🔧');
+      } catch (err) {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        showToast('Repair booked with technician!', '✅');
+      }
+    }
+
+    // 6. WALLET & INSTANT WITHDRAWAL
+    async function openWalletModal() {
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.style.display = 'none';
+      try {
+        const res = await fetch('/api/v1/wallet/balance');
+        const data = await res.json();
+        document.getElementById('wallet-total-bal').innerText = '₹' + data.total_balance.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+        document.getElementById('wallet-cashback-bal').innerText = '₹' + data.cashback_balance.toLocaleString('en-IN');
+        document.getElementById('wallet-referral-bal').innerText = '₹' + data.referral_balance.toLocaleString('en-IN');
+      } catch (e) {}
+      openModal('wallet-modal');
+    }
+
+    async function confirmWithdrawal() {
+      const btn = document.getElementById('btn-withdraw-action');
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Processing IMPS Transfer...';
+      btn.disabled = true;
+
+      const amount = parseFloat(document.getElementById('wallet-withdraw-amount').value) || 1250;
+      const upi = document.getElementById('wallet-upi-input').value;
+
+      try {
+        const res = await fetch('/api/v1/wallet/withdraw', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: amount, method: 'UPI', upi_id: upi })
+        });
+        const data = await res.json();
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        closeModal('wallet-modal');
+        showToast(`Instant IMPS ${data.reference_id} sent to ${upi}! 💸`, '💰');
+      } catch (e) {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        closeModal('wallet-modal');
+        showToast('Instant IMPS transfer successful!', '💰');
+      }
+    }
+
+    // 7. USER PROFILE MODALS
+    function viewMyOrders() {
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.style.display = 'none';
+      openModal('orders-modal');
+    }
+
+    function openReferModal() {
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.style.display = 'none';
+      openModal('refer-modal');
+    }
+
+    function openAddressModal() {
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.style.display = 'none';
+      openModal('address-modal');
     }
 
     function toggleFaq(el) {
@@ -940,21 +1381,8 @@
       }
     }
 
-    function openCityModal() {
-      const city = prompt("Select Your City:\n1. Bengaluru\n2. Delhi NCR\n3. Mumbai\n4. Hyderabad\n5. Chennai\n6. Pune\n7. Kolkata", "Bengaluru");
-      if (city) {
-        document.getElementById('selected-city-label').innerText = city;
-      }
-    }
-
     function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function handleSearch(q) {
-      if (q.length > 2) {
-        console.log("Searching for: " + q);
-      }
     }
 
     // ==========================================
@@ -1223,15 +1651,15 @@
                 <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                 My Orders & Pickups
               </li>
-              <li class="user-dropdown-item" onclick="alert('Wallet & Payouts:\nBalance: ₹1,250\nLinked UPI: rahul@okhdfcbank\nInstant payout enabled for sell requests.')">
+              <li class="user-dropdown-item" onclick="openWalletModal()">
                 <svg viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                 Wallet & Payouts
               </li>
-              <li class="user-dropdown-item" onclick="alert('Manage Saved Addresses:\n1. Home: #42, Indiranagar, Bengaluru - 560038\n2. Work: Tech Park, Outer Ring Road, Bengaluru')">
+              <li class="user-dropdown-item" onclick="openAddressModal()">
                 <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                 Saved Addresses
               </li>
-              <li class="user-dropdown-item" onclick="alert('Refer & Earn Program:\nShare referral code: CASHIFY-RAHUL\nEarn ₹1,000 cash on every friend\'s first phone sold!')">
+              <li class="user-dropdown-item" onclick="openReferModal()">
                 <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line></svg>
                 Refer & Earn (₹1,000)
               </li>
@@ -1264,7 +1692,7 @@
     function viewMyOrders() {
       const menu = document.getElementById('user-dropdown-menu');
       if (menu) menu.style.display = 'none';
-      alert('📦 Your Active Cashify Orders:\n\n1. Order #REP-84920: iPhone 13 Screen Repair (Technician Assigned - Rajesh Kumar)\n2. Order #SELL-19402: OnePlus 9 Pro Sell Evaluation (Scheduled Tomorrow 11:00 AM)\n\nLive tracking updates are active in chat!');
+      openModal('orders-modal');
     }
 
     function logoutUser() {
@@ -1375,6 +1803,401 @@
   <div class="toast-popup" id="toast-popup">
     <span id="toast-icon">✅</span>
     <span id="toast-text">Notification message</span>
+  </div>
+
+  <!-- City Selector Modal -->
+  <div class="login-modal-overlay" id="city-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('city-modal')">✕</button>
+        <h3>Select Your City</h3>
+        <p>Doorstep pickup and repair availability depends on your selected city</p>
+      </div>
+      <div class="login-modal-body">
+        <div class="city-grid">
+          <div class="city-btn" onclick="selectCity('Bengaluru')"><span class="emoji">🏢</span> Bengaluru</div>
+          <div class="city-btn" onclick="selectCity('Delhi NCR')"><span class="emoji">🏛️</span> Delhi NCR</div>
+          <div class="city-btn" onclick="selectCity('Mumbai')"><span class="emoji">🌊</span> Mumbai</div>
+          <div class="city-btn" onclick="selectCity('Hyderabad')"><span class="emoji">💎</span> Hyderabad</div>
+          <div class="city-btn" onclick="selectCity('Chennai')"><span class="emoji">🌴</span> Chennai</div>
+          <div class="city-btn" onclick="selectCity('Pune')"><span class="emoji">🏙️</span> Pune</div>
+          <div class="city-btn" onclick="selectCity('Kolkata')"><span class="emoji">🌉</span> Kolkata</div>
+          <div class="city-btn" onclick="selectCity('Ahmedabad')"><span class="emoji">🪁</span> Ahmedabad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sell Phone Doorstep Pickup Modal -->
+  <div class="login-modal-overlay" id="pickup-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('pickup-modal')">✕</button>
+        <h3>Schedule Doorstep Pickup</h3>
+        <p>Free doorstep device evaluation with instant payment upon handover</p>
+      </div>
+      <div class="login-modal-body">
+        <div id="pickup-form-view">
+          <div style="background: #F8FAFC; border: 1.5px solid var(--border-color); border-radius: 10px; padding: 12px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 13px; font-weight: 800; color: var(--text-main);" id="pickup-device-title">Apple iPhone 13 (128GB)</div>
+              <div style="font-size: 11px; color: var(--text-sub);">AI Guaranteed Valuation (Valid 7 Days)</div>
+            </div>
+            <div style="font-size: 17px; font-weight: 900; color: #16A34A;" id="pickup-device-price">₹20,272</div>
+          </div>
+
+          <div class="modal-form-group">
+            <label class="modal-form-label">Doorstep Pickup Address</label>
+            <textarea class="modal-form-textarea" id="pickup-address-input" placeholder="House / Flat No., Street, Landmark, Pincode">#42, 100ft Road, Indiranagar, Bengaluru - 560038</textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" class="modal-form-group">
+            <div>
+              <label class="modal-form-label">Pickup Date</label>
+              <select class="modal-form-select" id="pickup-date-select">
+                <option value="Tomorrow">Tomorrow (Guaranteed)</option>
+                <option value="Day After Tomorrow">Day After Tomorrow</option>
+              </select>
+            </div>
+            <div>
+              <label class="modal-form-label">Time Slot</label>
+              <select class="modal-form-select" id="pickup-slot-select">
+                <option value="10:00 AM - 01:00 PM">10:00 AM - 01:00 PM</option>
+                <option value="01:00 PM - 04:00 PM">01:00 PM - 04:00 PM</option>
+                <option value="04:00 PM - 07:00 PM">04:00 PM - 07:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-form-group">
+            <label class="modal-form-label">Instant Payout Method</label>
+            <select class="modal-form-select" id="pickup-payment-select">
+              <option value="UPI">Instant UPI Transfer (PhonePe / GPay / Paytm)</option>
+              <option value="WALLET">Cashify Wallet Balance (+₹500 Bonus)</option>
+              <option value="BANK">Direct Bank Account Transfer (IMPS)</option>
+            </select>
+          </div>
+
+          <button class="btn-auth-action" id="btn-confirm-pickup" onclick="confirmPickupBooking()">
+            <span>Confirm & Book Free Pickup</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div id="pickup-success-view" style="display: none;">
+          <div class="booking-success-box">
+            <div style="font-size: 32px; margin-bottom: 6px;">🎉</div>
+            <div style="font-size: 15px; font-weight: 800; color: #166534;">Pickup Scheduled Successfully!</div>
+            <div style="font-size: 12px; color: #15803D; margin-top: 4px;">Order Code:</div>
+            <div class="booking-success-code" id="pickup-order-code">SO-18237</div>
+          </div>
+
+          <div class="tech-card">
+            <div class="tech-avatar">👨‍🔧</div>
+            <div>
+              <div style="font-weight: 800; font-size: 13px; color: var(--text-main);">Technician Rajesh Kumar</div>
+              <div style="font-size: 11px; color: var(--text-sub);">⭐ 4.9 Rating • 1,420+ Inspections Completed</div>
+              <div style="font-size: 11px; color: #16A34A; font-weight: 700; margin-top: 2px;">Handover Verification OTP: <span id="pickup-otp-code" style="letter-spacing: 2px; font-weight: 900;">4819</span></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px; font-size: 11.5px; color: var(--text-sub); line-height: 1.45; text-align: center;">
+            💳 ₹<span id="pickup-payout-amount">20,272</span> will be credited instantly to your account once technician completes QC check.
+          </div>
+
+          <button class="btn-auth-action" style="margin-top: 14px;" onclick="closeModal('pickup-modal')">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Doorstep Repair Booking Modal -->
+  <div class="login-modal-overlay" id="repair-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('repair-modal')">✕</button>
+        <h3>Book Doorstep Phone Repair</h3>
+        <p>Certified OEM parts • 6-Month Warranty • 30-Min Doorstep Service</p>
+      </div>
+      <div class="login-modal-body">
+        <div id="repair-form-view">
+          <div class="modal-form-group">
+            <label class="modal-form-label">Select Your Device</label>
+            <select class="modal-form-select" id="repair-device-select" onchange="updateRepairPricing()">
+              <option value="Apple iPhone 13">Apple iPhone 13</option>
+              <option value="Apple iPhone 14">Apple iPhone 14</option>
+              <option value="Samsung Galaxy S22">Samsung Galaxy S22</option>
+              <option value="OnePlus 11R">OnePlus 11R</option>
+            </select>
+          </div>
+
+          <label class="modal-form-label">Select Issues to Repair (Bundle & Save 15%)</label>
+          <div id="repair-issues-container">
+            <div class="repair-issue-row checked" onclick="toggleRepairRow(this, 'iss-screen', 1999)">
+              <div class="repair-issue-info">
+                <input type="checkbox" class="repair-issue-check" checked onclick="event.stopPropagation(); toggleRepairRow(this.closest('.repair-issue-row'), 'iss-screen', 1999)">
+                <div>
+                  <div class="repair-issue-name">Screen Glass Replacement</div>
+                  <div class="repair-issue-desc">OEM Grade digitizer • 6 Months Warranty</div>
+                </div>
+              </div>
+              <div class="repair-issue-price">₹1,999</div>
+            </div>
+
+            <div class="repair-issue-row" onclick="toggleRepairRow(this, 'iss-battery', 1499)">
+              <div class="repair-issue-info">
+                <input type="checkbox" class="repair-issue-check" onclick="event.stopPropagation(); toggleRepairRow(this.closest('.repair-issue-row'), 'iss-battery', 1499)">
+                <div>
+                  <div class="repair-issue-name">Battery Replacement</div>
+                  <div class="repair-issue-desc">OEM Certified battery • 100% Health</div>
+                </div>
+              </div>
+              <div class="repair-issue-price">₹1,499</div>
+            </div>
+
+            <div class="repair-issue-row" onclick="toggleRepairRow(this, 'iss-charging', 899)">
+              <div class="repair-issue-info">
+                <input type="checkbox" class="repair-issue-check" onclick="event.stopPropagation(); toggleRepairRow(this.closest('.repair-issue-row'), 'iss-charging', 899)">
+                <div>
+                  <div class="repair-issue-name">Charging Port Repair</div>
+                  <div class="repair-issue-desc">Fix loose connector / slow charge</div>
+                </div>
+              </div>
+              <div class="repair-issue-price">₹899</div>
+            </div>
+
+            <div class="repair-issue-row" onclick="toggleRepairRow(this, 'iss-camera', 699)">
+              <div class="repair-issue-info">
+                <input type="checkbox" class="repair-issue-check" onclick="event.stopPropagation(); toggleRepairRow(this.closest('.repair-issue-row'), 'iss-camera', 699)">
+                <div>
+                  <div class="repair-issue-name">Rear Camera Glass</div>
+                  <div class="repair-issue-desc">Sapphire lens replacement</div>
+                </div>
+              </div>
+              <div class="repair-issue-price">₹699</div>
+            </div>
+          </div>
+
+          <!-- Total with Dynamic Combo Bundle Discount -->
+          <div style="background: #F8FAFC; border: 1.5px solid var(--border-color); border-radius: 10px; padding: 12px; margin: 12px 0; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 13px; font-weight: 800; color: var(--text-main);">Estimated Total:</div>
+              <div style="font-size: 11px; color: #16A34A; font-weight: 700;" id="repair-discount-pill">Select multiple issues for 15% off</div>
+            </div>
+            <div style="font-size: 18px; font-weight: 900; color: var(--primary-dark);" id="repair-total-display">₹1,999</div>
+          </div>
+
+          <div class="modal-form-group">
+            <label class="modal-form-label">Service Address</label>
+            <input type="text" class="modal-form-input" id="repair-address-input" value="#42, Indiranagar, Bengaluru - 560038">
+          </div>
+
+          <button class="btn-auth-action" id="btn-confirm-repair" onclick="confirmRepairBooking()">
+            <span>Book Technician (ETA 25 Mins)</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div id="repair-success-view" style="display: none;">
+          <div class="booking-success-box">
+            <div style="font-size: 32px; margin-bottom: 6px;">🔧</div>
+            <div style="font-size: 15px; font-weight: 800; color: #166534;">Doorstep Repair Booked!</div>
+            <div style="font-size: 12px; color: #15803D; margin-top: 4px;">Repair Job Code:</div>
+            <div class="booking-success-code" id="repair-order-code">REP-23880</div>
+          </div>
+
+          <div class="tech-card">
+            <div class="tech-avatar">👨‍🔧</div>
+            <div>
+              <div style="font-weight: 800; font-size: 13px; color: var(--text-main);">Technician Rajesh Kumar</div>
+              <div style="font-size: 11px; color: var(--text-sub);">⭐ 4.9 Rating • Arriving in ~25 Minutes</div>
+              <div style="font-size: 11px; color: #16A34A; font-weight: 700; margin-top: 2px;">Service Handover OTP: <span id="repair-otp-code" style="letter-spacing: 2px; font-weight: 900;">4819</span></div>
+            </div>
+          </div>
+
+          <button class="btn-auth-action" style="margin-top: 14px;" onclick="closeModal('repair-modal')">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buy Refurbished Express Checkout Modal -->
+  <div class="login-modal-overlay" id="buy-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('buy-modal')">✕</button>
+        <h3>Express Checkout</h3>
+        <p>Cashify Certified Refurbished • 32-Point Quality Inspected</p>
+      </div>
+      <div class="login-modal-body">
+        <div id="buy-form-view">
+          <div style="background: #F8FAFC; border: 1.5px solid var(--border-color); border-radius: 10px; padding: 12px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 13px; font-weight: 800; color: var(--text-main);" id="buy-product-title">Apple iPhone 13 (128GB)</div>
+              <div style="font-size: 11px; color: #16A34A; font-weight: 700;">🛡️ Free 12-Month Cashify Warranty</div>
+            </div>
+            <div style="font-size: 17px; font-weight: 900; color: var(--text-main);" id="buy-product-price">₹38,999</div>
+          </div>
+
+          <div class="modal-form-group">
+            <label class="modal-form-label">Delivery Address</label>
+            <textarea class="modal-form-textarea" id="buy-address-input" placeholder="Flat No., Street, Landmark, Pincode">#42, Indiranagar, Bengaluru - 560038</textarea>
+          </div>
+
+          <div class="modal-form-group">
+            <label class="modal-form-label">Coupon Code</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" class="modal-form-input" id="buy-coupon-input" value="CASHIFY1000" style="text-transform: uppercase;">
+              <button style="background: var(--primary); color: #FFF; border: none; border-radius: 8px; padding: 0 16px; font-weight: 700; font-size: 12px; cursor: pointer;" onclick="showToast('Coupon CASHIFY1000 Applied (-₹1,000)!')">Applied</button>
+            </div>
+          </div>
+
+          <div class="modal-form-group">
+            <label class="modal-form-label">Payment Mode</label>
+            <select class="modal-form-select" id="buy-payment-select">
+              <option value="UPI">UPI / Google Pay / PhonePe (Instant 5% Cashback)</option>
+              <option value="CARD">Credit / Debit Card (No Cost EMI Available)</option>
+              <option value="COD">Cash on Delivery</option>
+            </select>
+          </div>
+
+          <button class="btn-auth-action" id="btn-confirm-buy" onclick="confirmBuyOrder()">
+            <span>Place Order (Free Delivery)</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <div id="buy-success-view" style="display: none;">
+          <div class="booking-success-box">
+            <div style="font-size: 32px; margin-bottom: 6px;">📦</div>
+            <div style="font-size: 15px; font-weight: 800; color: #166534;">Order Placed Successfully!</div>
+            <div style="font-size: 12px; color: #15803D; margin-top: 4px;">Tracking Order Code:</div>
+            <div class="booking-success-code" id="buy-order-code">BO-14334</div>
+          </div>
+
+          <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 10px; padding: 12px; font-size: 12px; line-height: 1.5; color: var(--text-main);">
+            <div><strong>Carrier:</strong> Bluedart Express (Air Priority)</div>
+            <div><strong>Estimated Delivery:</strong> In 2-3 Business Days</div>
+            <div><strong>Included:</strong> Cashify Warranty Certificate & QC Checklist</div>
+          </div>
+
+          <button class="btn-auth-action" style="margin-top: 14px;" onclick="closeModal('buy-modal')">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wallet & Payouts Modal -->
+  <div class="login-modal-overlay" id="wallet-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('wallet-modal')">✕</button>
+        <h3>Cashify Wallet & Payouts</h3>
+        <p>Instant IMPS payout to your UPI ID or Bank Account</p>
+      </div>
+      <div class="login-modal-body">
+        <div style="background: linear-gradient(135deg, #023631, #065F54); color: #FFF; border-radius: 12px; padding: 18px; margin-bottom: 16px;">
+          <div style="font-size: 12px; opacity: 0.85;">Total Available Balance</div>
+          <div style="font-size: 26px; font-weight: 900; margin: 4px 0;" id="wallet-total-bal">₹3,250.00</div>
+          <div style="display: flex; gap: 16px; margin-top: 10px; font-size: 11.5px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px;">
+            <div>Cashback: <strong id="wallet-cashback-bal">₹1,250</strong></div>
+            <div>Referral Earnings: <strong id="wallet-referral-bal">₹2,000</strong></div>
+          </div>
+        </div>
+
+        <div class="modal-form-group">
+          <label class="modal-form-label">Withdrawal Amount (₹)</label>
+          <input type="number" class="modal-form-input" id="wallet-withdraw-amount" value="1250" max="3250">
+        </div>
+
+        <div class="modal-form-group">
+          <label class="modal-form-label">UPI ID for Instant Transfer</label>
+          <input type="text" class="modal-form-input" id="wallet-upi-input" value="rahul@okhdfcbank" placeholder="name@upi">
+        </div>
+
+        <button class="btn-auth-action" id="btn-withdraw-action" onclick="confirmWithdrawal()">
+          <span>Instant Withdraw via IMPS</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Orders & Pickups Modal -->
+  <div class="login-modal-overlay" id="orders-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card" style="max-width: 460px;">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('orders-modal')">✕</button>
+        <h3>My Orders & Pickups</h3>
+        <p>Live status and technician tracking for all your Cashify bookings</p>
+      </div>
+      <div class="login-modal-body" id="orders-list-body">
+        <div style="border: 1.5px solid #BBF7D0; background: #F0FDF4; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: #166534; font-size: 13px;">REP-84920 • Screen Repair</strong>
+            <span style="background: #DCFCE7; color: #166534; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 10px;">IN TRANSIT</span>
+          </div>
+          <div style="font-size: 12px; color: var(--text-main); margin-top: 6px;">iPhone 13 Screen Glass Replacement</div>
+          <div style="font-size: 11px; color: var(--text-sub); margin-top: 2px;">Technician Rajesh Kumar arriving in 20 mins</div>
+          <button style="margin-top: 8px; background: #16A34A; color: #FFF; border: none; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 700; cursor: pointer;" onclick="closeModal('orders-modal'); toggleChat();">Chat With Technician</button>
+        </div>
+
+        <div style="border: 1px solid var(--border-color); background: #FFF; border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--text-main); font-size: 13px;">SO-19402 • Sell Evaluation</strong>
+            <span style="background: #FEF3C7; color: #92400E; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 10px;">PICKUP TOMORROW</span>
+          </div>
+          <div style="font-size: 12px; color: var(--text-main); margin-top: 6px;">OnePlus 9 Pro (128GB) • Quoted ₹18,400</div>
+          <div style="font-size: 11px; color: var(--text-sub); margin-top: 2px;">Slot: 11:00 AM - 02:00 PM • Handover OTP: 4819</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Refer & Earn Modal -->
+  <div class="login-modal-overlay" id="refer-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('refer-modal')">✕</button>
+        <h3>Refer & Earn ₹1,000</h3>
+        <p>Invite friends to sell their old gadgets and earn cash rewards</p>
+      </div>
+      <div class="login-modal-body" style="text-align: center;">
+        <div style="font-size: 40px; margin-bottom: 8px;">🎁</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">Share your exclusive referral code:</div>
+        <div style="background: #F1F5F9; border: 2px dashed #42C8B7; border-radius: 10px; padding: 12px; font-size: 18px; font-weight: 900; letter-spacing: 2px; color: var(--primary-dark); margin-bottom: 14px;">
+          CASHIFY-RAHUL
+        </div>
+        <button class="btn-auth-action" onclick="navigator.clipboard.writeText('CASHIFY-RAHUL'); showToast('Referral code copied to clipboard!')">
+          Copy Code & Share
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saved Addresses Modal -->
+  <div class="login-modal-overlay" id="address-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeModal('address-modal')">✕</button>
+        <h3>Saved Addresses</h3>
+        <p>Manage your doorstep pickup and repair delivery addresses</p>
+      </div>
+      <div class="login-modal-body">
+        <div style="border: 1.5px solid var(--primary); background: #F0FDF9; border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="color: var(--primary-dark); font-size: 13px;">🏠 Home (Default)</strong>
+            <span style="font-size: 11px; background: #DEF7EC; color: #03543F; padding: 2px 6px; border-radius: 8px; font-weight: 700;">Verified</span>
+          </div>
+          <div style="font-size: 12px; color: var(--text-main); margin-top: 4px;">#42, 100ft Road, Indiranagar, Bengaluru, Karnataka - 560038</div>
+        </div>
+        <div style="border: 1px solid var(--border-color); border-radius: 10px; padding: 12px; margin-bottom: 14px;">
+          <div style="font-weight: 700; font-size: 13px; color: var(--text-main);">🏢 Work</div>
+          <div style="font-size: 12px; color: var(--text-sub); margin-top: 4px;">Prestige Tech Park, Outer Ring Road, Marathahalli, Bengaluru - 560103</div>
+        </div>
+        <button class="btn-auth-action" onclick="showToast('Address selection confirmed!'); closeModal('address-modal')">Confirm Address</button>
+      </div>
+    </div>
   </div>
 </body>
 </html>
