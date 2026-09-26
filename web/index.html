@@ -286,6 +286,141 @@
       max-width: 1240px; margin: 0 auto; border-top: 1px solid #374151; padding-top: 20px;
       display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #6B7280; flex-wrap: wrap; gap: 12px;
     }
+
+    /* Login Modal & Dynamic Auth Dropdown Styles */
+    .login-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px);
+      z-index: 2000; display: none; align-items: center; justify-content: center;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .login-modal-card {
+      background: #FFFFFF; border-radius: 18px; width: 92%; max-width: 420px;
+      overflow: hidden; box-shadow: var(--shadow-lg); animation: slideUp 0.25s ease-out;
+      position: relative;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(24px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .login-modal-header {
+      background: linear-gradient(135deg, #023631, #065F54 70%, #42C8B7);
+      color: #FFFFFF; padding: 26px 22px 22px; position: relative;
+    }
+    .login-modal-close {
+      position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.2);
+      border: none; color: #FFF; width: 30px; height: 30px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: background 0.2s;
+    }
+    .login-modal-close:hover { background: rgba(255,255,255,0.35); }
+    .login-modal-header h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px; }
+    .login-modal-header p { font-size: 12.5px; opacity: 0.9; line-height: 1.45; }
+
+    .login-modal-body { padding: 24px 22px; }
+    .auth-step { display: none; flex-direction: column; gap: 16px; }
+    .auth-step.active { display: flex; }
+
+    .input-label { font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; }
+    .phone-input-group {
+      display: flex; align-items: center; border: 1.5px solid var(--border-color);
+      border-radius: 10px; overflow: hidden; transition: border-color 0.2s;
+    }
+    .phone-input-group:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(66,200,183,0.18); }
+    .phone-prefix {
+      background: #F8FAFC; padding: 12px 14px; font-size: 14px; font-weight: 700;
+      color: var(--text-main); border-right: 1px solid var(--border-color); display: flex; align-items: center; gap: 6px;
+    }
+    .phone-input {
+      border: none; outline: none; padding: 12px 14px; font-size: 15px; font-weight: 600;
+      width: 100%; color: var(--text-main);
+    }
+
+    .otp-boxes {
+      display: flex; gap: 12px; justify-content: center; margin: 10px 0;
+    }
+    .otp-digit {
+      width: 54px; height: 58px; text-align: center; font-size: 24px; font-weight: 800;
+      border: 1.5px solid var(--border-color); border-radius: 10px; outline: none;
+      transition: all 0.2s; color: var(--text-main); background: #F8FAFC;
+    }
+    .otp-digit:focus { border-color: var(--primary); background: #FFF; box-shadow: 0 0 0 3px rgba(66,200,183,0.18); }
+
+    .btn-auth-action {
+      background: var(--primary); color: #FFF; font-weight: 800; font-size: 14px;
+      padding: 13px; border-radius: 10px; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.2s; width: 100%;
+    }
+    .btn-auth-action:hover { background: var(--primary-dark); }
+    .btn-auth-action:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .dev-hint-banner {
+      background: #EFF6FF; border: 1px dashed #3B82F6; border-radius: 8px;
+      padding: 10px 12px; font-size: 11.5px; color: #1D4ED8; display: flex; align-items: flex-start; gap: 8px;
+      line-height: 1.45;
+    }
+
+    .resend-row {
+      display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-sub);
+    }
+    .resend-btn {
+      background: none; border: none; color: var(--primary-dark); font-weight: 700;
+      cursor: pointer; padding: 0; font-size: 12px;
+    }
+    .resend-btn:disabled { color: #9CA3AF; cursor: not-allowed; }
+
+    .auth-error {
+      background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA;
+      border-radius: 8px; padding: 10px 12px; font-size: 12.5px; display: none; font-weight: 600;
+    }
+
+    /* User Profile Badge & Dropdown in Header */
+    .user-profile-widget { position: relative; }
+    .user-profile-btn {
+      display: flex; align-items: center; gap: 8px; background: #F1F4F6;
+      border: 1px solid var(--border-color); border-radius: 24px; padding: 4px 12px 4px 5px;
+      cursor: pointer; transition: all 0.2s; user-select: none;
+    }
+    .user-profile-btn:hover { background: #E5E9EC; border-color: var(--primary); }
+    .user-avatar-circle {
+      width: 28px; height: 28px; border-radius: 50%; background: var(--primary);
+      color: #FFF; font-weight: 800; font-size: 11.5px; display: flex; align-items: center;
+      justify-content: center;
+    }
+    .user-profile-name { font-size: 13px; font-weight: 700; color: var(--text-main); }
+    
+    .user-dropdown-menu {
+      position: absolute; right: 0; top: 125%; width: 250px; background: #FFFFFF;
+      border-radius: 12px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
+      z-index: 1100; display: none; overflow: hidden; animation: fadeIn 0.15s ease-out;
+    }
+    .user-dropdown-header {
+      padding: 14px 16px; background: #F8FAFC; border-bottom: 1px solid var(--border-color);
+    }
+    .user-dropdown-header .name { font-size: 13.5px; font-weight: 800; color: var(--text-main); }
+    .user-dropdown-header .phone { font-size: 11px; color: var(--text-sub); margin-top: 2px; }
+    .user-dropdown-header .badge {
+      display: inline-block; background: #DEF7EC; color: #03543F; font-size: 10px;
+      font-weight: 700; padding: 2px 7px; border-radius: 10px; margin-top: 5px;
+    }
+    .user-dropdown-list { list-style: none; padding: 6px 0; margin: 0; }
+    .user-dropdown-item {
+      display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+      font-size: 12.5px; font-weight: 600; color: var(--text-main); cursor: pointer;
+      transition: background 0.15s;
+    }
+    .user-dropdown-item:hover { background: #F1F4F6; color: var(--primary-dark); }
+    .user-dropdown-item svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+    .user-dropdown-item.logout { border-top: 1px solid var(--border-color); color: #DC2626; }
+    .user-dropdown-item.logout:hover { background: #FEF2F2; }
+
+    /* Toast Notification */
+    .toast-popup {
+      position: fixed; top: 24px; right: 24px; z-index: 3000;
+      background: #1F2229; color: #FFF; padding: 12px 18px; border-radius: 10px;
+      font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lg);
+      display: none; align-items: center; gap: 10px; animation: slideDown 0.25s ease-out;
+    }
   </style>
 </head>
 <body>
@@ -325,7 +460,9 @@
           <span id="selected-city-label">Bengaluru</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
         </div>
-        <button class="btn-login" onclick="alert('Logged in as Rahul Sharma (+91 98765 43210)')">Login</button>
+        <div id="auth-header-container">
+          <button class="btn-login" id="btn-header-login" onclick="openLoginModal()">Login</button>
+        </div>
       </div>
     </div>
 
@@ -819,6 +956,425 @@
         console.log("Searching for: " + q);
       }
     }
+
+    // ==========================================
+    // CASHIFY AUTHENTICATION & SESSION ENGINE
+    // ==========================================
+    let resendTimer = null;
+    let resendCountdown = 30;
+    let pendingPhoneNumber = '';
+
+    function showToast(message, icon = '✅') {
+      const toast = document.getElementById('toast-popup');
+      const text = document.getElementById('toast-text');
+      const ic = document.getElementById('toast-icon');
+      if (!toast) return;
+      text.innerText = message;
+      ic.innerText = icon;
+      toast.style.display = 'flex';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3500);
+    }
+
+    function openLoginModal() {
+      document.getElementById('login-modal').style.display = 'flex';
+      hideAuthError();
+      backToPhoneStep();
+      setTimeout(() => {
+        const inp = document.getElementById('login-phone-input');
+        if (inp) inp.focus();
+      }, 100);
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal').style.display = 'none';
+      if (resendTimer) clearInterval(resendTimer);
+    }
+
+    function handleModalOverlayClick(e) {
+      if (e.target.id === 'login-modal') {
+        closeLoginModal();
+      }
+    }
+
+    function showAuthError(msg) {
+      const errBox = document.getElementById('auth-error-box');
+      if (errBox) {
+        errBox.innerText = msg;
+        errBox.style.display = 'block';
+      }
+    }
+
+    function hideAuthError() {
+      const errBox = document.getElementById('auth-error-box');
+      if (errBox) errBox.style.display = 'none';
+    }
+
+    function backToPhoneStep() {
+      hideAuthError();
+      document.getElementById('auth-step-phone').classList.add('active');
+      document.getElementById('auth-step-otp').classList.remove('active');
+      document.getElementById('modal-heading').innerText = 'Login or Sign Up';
+      document.getElementById('modal-subheading').innerText = 'Get instant price quotes, track orders & earn exclusive cash rewards';
+      if (resendTimer) clearInterval(resendTimer);
+    }
+
+    async function requestOtp(isResend = false) {
+      hideAuthError();
+      const phoneInput = document.getElementById('login-phone-input');
+      const rawPhone = isResend ? pendingPhoneNumber : phoneInput.value.trim().replace(/\D/g, '');
+
+      if (!rawPhone || rawPhone.length !== 10) {
+        showAuthError('Please enter a valid 10-digit mobile number.');
+        return;
+      }
+
+      pendingPhoneNumber = rawPhone;
+      const formattedWithCode = '+91' + rawPhone;
+      const btn = isResend ? document.getElementById('btn-resend-otp') : document.getElementById('btn-send-otp');
+      const origText = btn.innerHTML;
+      btn.innerHTML = 'Sending OTP...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/v1/auth/otp/request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: formattedWithCode })
+        });
+        const data = await res.json();
+        btn.innerHTML = origText;
+        btn.disabled = false;
+
+        if (!res.ok) {
+          showAuthError(data.detail || 'Failed to send OTP. Please try again.');
+          return;
+        }
+
+        // Transition to OTP step
+        document.getElementById('auth-step-phone').classList.remove('active');
+        document.getElementById('auth-step-otp').classList.add('active');
+        document.getElementById('modal-heading').innerText = 'Verify Mobile Number';
+        document.getElementById('modal-subheading').innerText = 'Enter the one-time code sent to your phone';
+        document.getElementById('otp-phone-display').innerText = '+91 ' + rawPhone.slice(0, 5) + ' ' + rawPhone.slice(5);
+
+        // Clear OTP inputs
+        for (let i = 1; i <= 4; i++) {
+          const box = document.getElementById(`otp-${i}`);
+          if (box) box.value = '';
+        }
+        document.getElementById('otp-1').focus();
+
+        startResendTimer();
+        showToast('OTP sent! (Dev Test OTP: 1234)');
+      } catch (err) {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        showAuthError('Network error connecting to auth server.');
+      }
+    }
+
+    function startResendTimer() {
+      if (resendTimer) clearInterval(resendTimer);
+      resendCountdown = 30;
+      const timerLabel = document.getElementById('resend-timer-label');
+      const resendBtn = document.getElementById('btn-resend-otp');
+      resendBtn.disabled = true;
+      timerLabel.innerHTML = `Resend OTP in <strong>${resendCountdown}s</strong>`;
+
+      resendTimer = setInterval(() => {
+        resendCountdown--;
+        if (resendCountdown <= 0) {
+          clearInterval(resendTimer);
+          timerLabel.innerHTML = 'Didn\'t receive code?';
+          resendBtn.disabled = false;
+        } else {
+          timerLabel.innerHTML = `Resend OTP in <strong>${resendCountdown}s</strong>`;
+        }
+      }, 1000);
+    }
+
+    function handleOtpInput(index) {
+      const curr = document.getElementById(`otp-${index}`);
+      if (curr.value.length === 1 && index < 4) {
+        document.getElementById(`otp-${index + 1}`).focus();
+      }
+      // Auto-submit if all 4 digits entered
+      const o1 = document.getElementById('otp-1').value;
+      const o2 = document.getElementById('otp-2').value;
+      const o3 = document.getElementById('otp-3').value;
+      const o4 = document.getElementById('otp-4').value;
+      if (o1 && o2 && o3 && o4) {
+        verifyOtp();
+      }
+    }
+
+    function handleOtpKey(index, e) {
+      if (e.key === 'Backspace' && !document.getElementById(`otp-${index}`).value && index > 1) {
+        document.getElementById(`otp-${index - 1}`).focus();
+      }
+    }
+
+    function handleOtpPaste(e) {
+      const pasteData = (e.clipboardData || window.clipboardData).getData('text').trim();
+      if (/^\d{4}$/.test(pasteData)) {
+        e.preventDefault();
+        for (let i = 0; i < 4; i++) {
+          const box = document.getElementById(`otp-${i + 1}`);
+          if (box) box.value = pasteData[i];
+        }
+        document.getElementById('otp-4').focus();
+        verifyOtp();
+      }
+    }
+
+    async function verifyOtp() {
+      hideAuthError();
+      const o1 = document.getElementById('otp-1').value;
+      const o2 = document.getElementById('otp-2').value;
+      const o3 = document.getElementById('otp-3').value;
+      const o4 = document.getElementById('otp-4').value;
+      const otp = `${o1}${o2}${o3}${o4}`;
+
+      if (otp.length < 4) {
+        showAuthError('Please enter the complete 4-digit OTP.');
+        return;
+      }
+
+      const formattedWithCode = '+91' + pendingPhoneNumber;
+      const btn = document.getElementById('btn-verify-otp');
+      const origText = btn.innerHTML;
+      btn.innerHTML = 'Verifying...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/v1/auth/otp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: formattedWithCode, otp: otp })
+        });
+        const data = await res.json();
+        btn.innerHTML = origText;
+        btn.disabled = false;
+
+        if (!res.ok) {
+          showAuthError(data.detail || 'Invalid OTP. Enter 1234 for instant dev login.');
+          return;
+        }
+
+        // Save session
+        const sessionData = {
+          token: data.access_token,
+          user_id: data.user_id,
+          full_name: data.full_name,
+          phone: formattedWithCode,
+          role: data.role
+        };
+        localStorage.setItem('cashify_user', JSON.stringify(sessionData));
+
+        closeLoginModal();
+        updateAuthUI(sessionData);
+        showToast(`Welcome back, ${sessionData.full_name}! 🎉`);
+      } catch (err) {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+        showAuthError('Network error during verification.');
+      }
+    }
+
+    function updateAuthUI(user) {
+      const container = document.getElementById('auth-header-container');
+      if (!container) return;
+
+      if (!user) {
+        container.innerHTML = `<button class="btn-login" id="btn-header-login" onclick="openLoginModal()">Login</button>`;
+        return;
+      }
+
+      const initials = user.full_name
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2) || 'CU';
+
+      const firstName = user.full_name.split(' ')[0];
+
+      container.innerHTML = `
+        <div class="user-profile-widget" id="user-profile-widget">
+          <div class="user-profile-btn" onclick="toggleUserDropdown(event)">
+            <div class="user-avatar-circle">${initials}</div>
+            <span class="user-profile-name">${firstName}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          </div>
+          <div class="user-dropdown-menu" id="user-dropdown-menu">
+            <div class="user-dropdown-header">
+              <div class="name">${user.full_name}</div>
+              <div class="phone">${user.phone}</div>
+              <span class="badge">Verified Customer</span>
+            </div>
+            <div style="background: #F0FDF4; padding: 10px 16px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+              <span style="color: #166534; font-weight: 600;">Cashify Cash:</span>
+              <strong style="color: #16A34A; font-size: 13px;">₹1,250</strong>
+            </div>
+            <ul class="user-dropdown-list">
+              <li class="user-dropdown-item" onclick="viewMyOrders()">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                My Orders & Pickups
+              </li>
+              <li class="user-dropdown-item" onclick="alert('Wallet & Payouts:\nBalance: ₹1,250\nLinked UPI: rahul@okhdfcbank\nInstant payout enabled for sell requests.')">
+                <svg viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                Wallet & Payouts
+              </li>
+              <li class="user-dropdown-item" onclick="alert('Manage Saved Addresses:\n1. Home: #42, Indiranagar, Bengaluru - 560038\n2. Work: Tech Park, Outer Ring Road, Bengaluru')">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                Saved Addresses
+              </li>
+              <li class="user-dropdown-item" onclick="alert('Refer & Earn Program:\nShare referral code: CASHIFY-RAHUL\nEarn ₹1,000 cash on every friend\'s first phone sold!')">
+                <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line></svg>
+                Refer & Earn (₹1,000)
+              </li>
+              <li class="user-dropdown-item logout" onclick="logoutUser()">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Log Out
+              </li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleUserDropdown(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) {
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const widget = document.getElementById('user-profile-widget');
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu && widget && !widget.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+
+    function viewMyOrders() {
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.style.display = 'none';
+      alert('📦 Your Active Cashify Orders:\n\n1. Order #REP-84920: iPhone 13 Screen Repair (Technician Assigned - Rajesh Kumar)\n2. Order #SELL-19402: OnePlus 9 Pro Sell Evaluation (Scheduled Tomorrow 11:00 AM)\n\nLive tracking updates are active in chat!');
+    }
+
+    function logoutUser() {
+      localStorage.removeItem('cashify_user');
+      updateAuthUI(null);
+      showToast('Logged out successfully.', '👋');
+    }
+
+    function checkAuthSession() {
+      try {
+        const stored = localStorage.getItem('cashify_user');
+        if (stored) {
+          const user = JSON.parse(stored);
+          updateAuthUI(user);
+        } else {
+          updateAuthUI(null);
+        }
+      } catch (e) {
+        updateAuthUI(null);
+      }
+    }
+
+    // Initialize session and paste listeners on load
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuthSession();
+      const otpContainer = document.querySelector('.otp-boxes');
+      if (otpContainer) {
+        otpContainer.addEventListener('paste', handleOtpPaste);
+      }
+    });
   </script>
+
+  <!-- Cashify Interactive Auth Modal -->
+  <div class="login-modal-overlay" id="login-modal" onclick="handleModalOverlayClick(event)">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <button class="login-modal-close" onclick="closeLoginModal()">✕</button>
+        <h3 id="modal-heading">Login or Sign Up</h3>
+        <p id="modal-subheading">Get instant price quotes, track orders & earn exclusive cash rewards</p>
+      </div>
+      
+      <div class="login-modal-body">
+        <!-- Error box -->
+        <div class="auth-error" id="auth-error-box"></div>
+
+        <!-- Step 1: Phone Input -->
+        <div class="auth-step active" id="auth-step-phone">
+          <div>
+            <div class="input-label">Enter Mobile Number</div>
+            <div class="phone-input-group">
+              <div class="phone-prefix">
+                <span>🇮🇳</span> +91
+              </div>
+              <input type="tel" id="login-phone-input" class="phone-input" placeholder="98765 43210" maxlength="10" onkeypress="return event.charCode >= 48 && event.charCode <= 57" onkeydown="if(event.key === 'Enter') requestOtp()">
+            </div>
+          </div>
+
+          <div class="dev-hint-banner">
+            <span>💡</span>
+            <div><strong>Demo Mode:</strong> Use <strong>9876543210</strong> for pre-seeded account (Rahul Sharma) or enter any 10-digit mobile number!</div>
+          </div>
+
+          <button class="btn-auth-action" id="btn-send-otp" onclick="requestOtp()">
+            <span>Continue</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <div style="font-size: 11px; color: #9CA3AF; text-align: center; line-height: 1.4;">
+            By continuing, you agree to Cashify's <a href="#" style="color: var(--primary-dark); text-decoration: underline;">Terms of Service</a> & <a href="#" style="color: var(--primary-dark); text-decoration: underline;">Privacy Policy</a>.
+          </div>
+        </div>
+
+        <!-- Step 2: OTP Verification -->
+        <div class="auth-step" id="auth-step-otp">
+          <div style="text-align: center;">
+            <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 4px;">
+              Enter 4-digit code sent to <strong id="otp-phone-display" style="color: var(--text-main);">+91 98765 43210</strong>
+              <button onclick="backToPhoneStep()" style="background: none; border: none; color: var(--primary-dark); font-weight: 700; cursor: pointer; font-size: 12px; margin-left: 6px; text-decoration: underline;">Edit</button>
+            </div>
+          </div>
+
+          <div class="otp-boxes">
+            <input type="text" class="otp-digit" id="otp-1" maxlength="1" oninput="handleOtpInput(1)" onkeydown="handleOtpKey(1, event)" pattern="[0-9]*" inputmode="numeric">
+            <input type="text" class="otp-digit" id="otp-2" maxlength="1" oninput="handleOtpInput(2)" onkeydown="handleOtpKey(2, event)" pattern="[0-9]*" inputmode="numeric">
+            <input type="text" class="otp-digit" id="otp-3" maxlength="1" oninput="handleOtpInput(3)" onkeydown="handleOtpKey(3, event)" pattern="[0-9]*" inputmode="numeric">
+            <input type="text" class="otp-digit" id="otp-4" maxlength="1" oninput="handleOtpInput(4)" onkeydown="handleOtpKey(4, event)" pattern="[0-9]*" inputmode="numeric">
+          </div>
+
+          <div class="dev-hint-banner" style="background: #ECFDF5; border-color: #10B981; color: #047857;">
+            <span>✨</span>
+            <div><strong>Dev OTP:</strong> Enter <strong>1234</strong> to verify instantly.</div>
+          </div>
+
+          <div class="resend-row">
+            <span id="resend-timer-label">Resend OTP in <strong>30s</strong></span>
+            <button class="resend-btn" id="btn-resend-otp" onclick="requestOtp(true)" disabled>Resend Code</button>
+          </div>
+
+          <button class="btn-auth-action" id="btn-verify-otp" onclick="verifyOtp()">
+            <span>Verify & Continue</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-popup" id="toast-popup">
+    <span id="toast-icon">✅</span>
+    <span id="toast-text">Notification message</span>
+  </div>
 </body>
 </html>
