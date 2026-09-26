@@ -3,395 +3,705 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cashify Clone — AI ReCommerce & Doorstep Repairs</title>
+  <title>Sell/Buy Old and Used Mobile Phones Online in India For Instant Cash | Cashify</title>
+  <meta name="description" content="Buy & Sell Old Mobile Phones, Smartwatches, Laptops, Tablets And Other Gadgets Online, Get Exclusive Monthly Deal, Instant Quote And Free Doorstep Pickup At Cashify">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #00A389;
-      --primary-dark: #007A66;
-      --primary-light: #E0F5F1;
-      --secondary: #FFB800;
-      --secondary-dark: #D49B00;
-      --secondary-light: #FFF8E6;
-      --neutral-900: #1A1F2C;
-      --neutral-700: #4A5568;
-      --neutral-500: #718096;
-      --neutral-200: #E2E8F0;
-      --neutral-100: #F7FAFC;
-      --success: #10B981;
-      --danger: #EF4444;
-      --radius: 14px;
-      --shadow: 0 4px 20px rgba(0, 163, 137, 0.08);
+      --primary: #42C8B7;
+      --primary-dark: #1F9C8B;
+      --primary-light: #EAF8F6;
+      --accent: #FFB800;
+      --accent-dark: #E0A000;
+      --text-main: #1F2229;
+      --text-sub: #72777A;
+      --border-color: #E7EAEC;
+      --bg-page: #F8FAFB;
+      --bg-card: #FFFFFF;
+      --danger: #E05353;
+      --success: #16A34A;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+      --radius: 12px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: #F8FAF9; color: var(--neutral-900); padding-bottom: 70px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg-page); color: var(--text-main); font-size: 14px; line-height: 1.5; }
+    a { text-decoration: none; color: inherit; }
 
-    /* Top App Bar */
-    header {
-      background: white;
-      border-bottom: 1px solid var(--neutral-200);
-      position: sticky; top: 0; z-index: 100;
+    /* Top Sticky Header */
+    header.main-header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky; top: 0; z-index: 1000;
+    }
+    .header-top {
+      max-width: 1240px; margin: 0 auto; padding: 12px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo-container { display: flex; align-items: center; cursor: pointer; }
+    
+    /* Search Bar */
+    .search-wrapper {
+      flex: 1; max-width: 520px; position: relative;
+    }
+    .search-bar {
+      display: flex; align-items: center; background: #F1F4F6;
+      border-radius: 8px; padding: 8px 14px; gap: 10px; border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .search-bar:focus-within { border-color: var(--primary); background: #FFF; box-shadow: 0 0 0 3px rgba(66,200,183,0.15); }
+    .search-bar input {
+      border: none; background: transparent; outline: none; width: 100%; font-size: 13px; color: var(--text-main);
+    }
+    .search-bar svg { fill: var(--text-sub); width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* City Selector & Login */
+    .header-actions { display: flex; align-items: center; gap: 16px; }
+    .city-picker {
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+      font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 6px;
+    }
+    .city-picker:hover { background: #F1F4F6; }
+    .btn-login {
+      background: var(--primary); color: #FFF; font-weight: 700;
+      padding: 8px 24px; border-radius: 8px; border: none; cursor: pointer;
+      font-size: 13px; transition: background 0.2s;
+    }
+    .btn-login:hover { background: var(--primary-dark); }
+
+    /* Navigation Bar */
+    .nav-bar {
+      background: #FFFFFF; border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-inner {
+      max-width: 1240px; margin: 0 auto; padding: 0 16px;
+      display: flex; align-items: center; gap: 24px; overflow-x: auto;
+    }
+    .nav-item {
+      padding: 12px 0; font-size: 13px; font-weight: 600; color: var(--text-main);
+      cursor: pointer; position: relative; white-space: nowrap; display: flex; align-items: center; gap: 4px;
+      border-bottom: 2px solid transparent; transition: color 0.2s;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: var(--primary-dark); border-bottom-color: var(--primary);
+    }
+
+    /* Container */
+    .main-container { max-width: 1240px; margin: 0 auto; padding: 24px 16px; }
+
+    /* Hero Carousel Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, #023631, #065F54 50%, #42C8B7);
+      border-radius: var(--radius); color: #FFFFFF; padding: 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      position: relative; overflow: hidden; margin-bottom: 30px; box-shadow: var(--shadow-md);
+    }
+    .hero-content { max-width: 580px; z-index: 2; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 4px 12px;
+      font-size: 11px; font-weight: 700; margin-bottom: 12px; backdrop-filter: blur(4px);
+    }
+    .hero-content h1 { font-size: 32px; font-weight: 800; line-height: 1.25; margin-bottom: 12px; }
+    .hero-content p { font-size: 15px; opacity: 0.9; margin-bottom: 24px; }
+    .hero-actions { display: flex; gap: 12px; }
+    .btn-hero {
+      background: var(--accent); color: #1F2229; font-weight: 800;
+      padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px;
+      box-shadow: 0 4px 12px rgba(255, 184, 0, 0.35); transition: transform 0.2s;
+    }
+    .btn-hero:hover { transform: translateY(-2px); }
+    .btn-hero-outline {
+      background: transparent; color: #FFFFFF; font-weight: 700;
+      padding: 12px 22px; border-radius: 8px; border: 1.5px solid #FFFFFF; cursor: pointer; font-size: 14px;
+    }
+    .hero-badge-img { font-size: 90px; z-index: 2; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.25)); }
+
+    /* Categories Grid */
+    .section-title {
+      font-size: 20px; font-weight: 800; margin-bottom: 16px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 24px;
     }
-    .brand { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 800; color: var(--primary); }
-    .brand span { color: var(--secondary-dark); }
-    .top-actions { display: flex; align-items: center; gap: 12px; }
-    .badge-api { background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-
-    /* Main Container */
-    .container { max-width: 900px; margin: 0 auto; padding: 20px 16px; }
-
-    /* Bottom Navigation Bar */
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: white; border-top: 1px solid var(--neutral-200);
-      display: flex; justify-content: space-around; padding: 8px 0; z-index: 100;
+    .section-title span.view-all { font-size: 13px; color: var(--primary-dark); font-weight: 700; cursor: pointer; }
+    
+    .category-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 14px; margin-bottom: 36px;
     }
-    .nav-btn {
-      background: none; border: none; outline: none; cursor: pointer;
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      font-size: 11px; font-weight: 600; color: var(--neutral-500); width: 20%;
+    .category-card {
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius);
+      padding: 18px 12px; text-align: center; cursor: pointer; transition: all 0.2s;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
     }
-    .nav-btn.active { color: var(--primary); }
-    .nav-btn svg { width: 22px; height: 22px; fill: currentColor; }
+    .category-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+    .category-card .icon-box { font-size: 32px; margin-bottom: 2px; }
+    .category-card .title { font-size: 13px; font-weight: 700; color: var(--text-main); }
+    .category-card .tag { font-size: 10px; font-weight: 700; color: var(--primary-dark); background: var(--primary-light); padding: 2px 6px; border-radius: 10px; }
 
-    /* Views */
-    .view { display: none; }
-    .view.active { display: block; animation: fadeIn 0.2s ease-in-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Card styling */
-    .card {
-      background: white; border-radius: var(--radius); border: 1px solid var(--neutral-200);
-      padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow);
+    /* Interactive Sell AI Calculator Section */
+    .ai-valuation-box {
+      background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border-color);
+      padding: 28px; margin-bottom: 36px; box-shadow: var(--shadow-sm);
     }
-    .banner {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-      color: white; border-radius: var(--radius); padding: 24px; margin-bottom: 20px;
+    .val-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     }
-    .banner h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
-    .banner p { font-size: 13px; opacity: 0.9; margin-bottom: 16px; line-height: 1.4; }
-
-    /* Buttons */
-    .btn {
-      background: var(--primary); color: white; border: none; border-radius: 10px;
-      padding: 10px 18px; font-size: 13px; font-weight: 700; cursor: pointer;
-      display: inline-flex; align-items: center; gap: 8px; justify-content: center;
-      transition: all 0.2s ease;
+    .val-tag {
+      background: #FEF3C7; color: #92400E; font-size: 11px; font-weight: 800;
+      padding: 4px 10px; border-radius: 20px; display: inline-flex; align-items: center; gap: 4px;
     }
-    .btn:hover { opacity: 0.92; transform: translateY(-1px); }
-    .btn-secondary { background: var(--secondary); color: var(--neutral-900); }
-    .btn-outline { background: white; color: var(--primary); border: 1px solid var(--primary); }
-    .btn-block { width: 100%; padding: 12px; }
-
-    /* Grid */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
-
-    /* Form Inputs */
-    label { font-size: 12px; font-weight: 700; color: var(--neutral-700); margin-bottom: 6px; display: block; }
-    select, input, textarea {
-      width: 100%; padding: 10px 14px; border: 1px solid var(--neutral-200);
-      border-radius: 8px; font-size: 13px; margin-bottom: 14px; outline: none;
+    .val-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;
     }
-    select:focus, input:focus, textarea:focus { border-color: var(--primary); }
+    @media(max-width: 768px) { .val-grid { grid-template-columns: 1fr 1fr; } }
+    .input-group label { display: block; font-size: 11px; font-weight: 700; color: var(--text-sub); margin-bottom: 6px; text-transform: uppercase; }
+    .input-group select, .input-group input {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px;
+      font-size: 13px; font-weight: 600; outline: none; background: #FAFAFA;
+    }
+    .input-group select:focus, .input-group input:focus { border-color: var(--primary); background: #FFF; }
 
-    /* Status Pill */
-    .pill { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-    .pill-success { background: #DCFCE7; color: #166534; }
-    .pill-warning { background: #FEF3C7; color: #92400E; }
-    .pill-primary { background: var(--primary-light); color: var(--primary-dark); }
+    /* Valuation Quote Result */
+    .quote-banner {
+      background: linear-gradient(135deg, #EAF8F6, #D7F3EE);
+      border: 1.5px solid var(--primary); border-radius: 10px; padding: 20px;
+      display: flex; justify-content: space-between; align-items: center; margin-top: 18px;
+    }
+    .quote-price { font-size: 28px; font-weight: 900; color: #007A66; }
+    .quote-breakdown-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; }
 
-    /* Chat bubble */
-    .chat-box { max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; padding: 8px 0; }
-    .bubble { max-width: 80%; padding: 10px 14px; border-radius: 14px; font-size: 13px; line-height: 1.4; }
-    .bubble-bot { background: white; border: 1px solid var(--neutral-200); align-self: flex-start; }
-    .bubble-user { background: var(--primary); color: white; align-self: flex-end; }
+    /* Refurbished Deals Grid */
+    .product-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px; margin-bottom: 36px;
+    }
+    .product-card {
+      background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius);
+      padding: 16px; position: relative; transition: all 0.2s; display: flex; flex-direction: column;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+    .discount-pill {
+      position: absolute; top: 12px; left: 12px; background: #DC2626; color: #FFF;
+      font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px;
+    }
+    .grade-pill {
+      position: absolute; top: 12px; right: 12px; background: #EAF8F6; color: #007A66;
+      font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--primary);
+    }
+    .product-thumbnail {
+      font-size: 54px; text-align: center; margin: 24px 0 16px;
+    }
+    .product-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+    .product-warranty { font-size: 11px; color: var(--text-sub); display: flex; align-items: center; gap: 4px; margin-bottom: 12px; }
+    .price-row { display: flex; align-items: baseline; gap: 8px; margin-top: auto; margin-bottom: 12px; }
+    .current-price { font-size: 18px; font-weight: 900; color: var(--text-main); }
+    .original-price { font-size: 12px; color: var(--text-sub); text-decoration: line-through; }
+    .btn-buy {
+      width: 100%; background: var(--primary); color: #FFF; border: none; font-weight: 700;
+      padding: 9px; border-radius: 8px; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-buy:hover { background: var(--primary-dark); }
+
+    /* Trust & Stats Section */
+    .trust-section {
+      background: #FFFFFF; border-radius: var(--radius); border: 1px solid var(--border-color);
+      padding: 32px 24px; margin-bottom: 36px;
+    }
+    .trust-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; text-align: center;
+    }
+    .trust-item h3 { font-size: 26px; font-weight: 900; color: var(--primary-dark); margin-bottom: 4px; }
+    .trust-item p { font-size: 12px; color: var(--text-sub); font-weight: 600; }
+
+    /* Doorstep Repair Banner */
+    .repair-banner {
+      background: #FFFBEB; border: 1.5px solid #FDE68A; border-radius: var(--radius);
+      padding: 24px; margin-bottom: 36px; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .repair-content h3 { font-size: 18px; font-weight: 800; color: #92400E; margin-bottom: 6px; }
+    .repair-content p { font-size: 13px; color: #78350F; max-width: 650px; }
+
+    /* FAQ Accordion */
+    .faq-item {
+      background: #FFF; border: 1px solid var(--border-color); border-radius: 8px;
+      margin-bottom: 10px; overflow: hidden;
+    }
+    .faq-question {
+      padding: 14px 18px; font-weight: 700; font-size: 13px; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-answer {
+      padding: 0 18px 14px; font-size: 12px; color: var(--text-sub); line-height: 1.5; display: none;
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-question { color: var(--primary-dark); }
+
+    /* Floating Agent 6 Chatbot */
+    .chat-fab {
+      position: fixed; bottom: 24px; right: 24px; background: var(--primary);
+      color: #FFF; width: 56px; height: 56px; border-radius: 28px; border: none;
+      box-shadow: 0 6px 20px rgba(66,200,183,0.4); cursor: pointer; z-index: 1000;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .chat-fab:hover { transform: scale(1.08); background: var(--primary-dark); }
+    .chat-popup {
+      position: fixed; bottom: 90px; right: 24px; width: 360px; max-height: 500px;
+      background: #FFF; border-radius: 16px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color);
+      z-index: 1000; display: none; flex-direction: column; overflow: hidden;
+    }
+    .chat-header {
+      background: var(--primary); color: #FFF; padding: 14px 16px;
+      display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 14px;
+    }
+    .chat-body { padding: 14px; overflow-y: auto; flex: 1; max-height: 340px; display: flex; flex-direction: column; gap: 8px; }
+    .chat-bubble { max-width: 82%; padding: 8px 12px; border-radius: 12px; font-size: 12px; line-height: 1.4; }
+    .chat-bot { background: #F1F4F6; align-self: flex-start; }
+    .chat-user { background: var(--primary); color: #FFF; align-self: flex-end; }
+    .chat-input-bar {
+      padding: 10px 14px; border-top: 1px solid var(--border-color); display: flex; gap: 8px;
+    }
+    .chat-input-bar input {
+      flex: 1; border: 1px solid var(--border-color); border-radius: 20px; padding: 6px 12px; font-size: 12px; outline: none;
+    }
+
+    /* Footer */
+    footer.main-footer {
+      background: #1F2229; color: #FFF; padding: 48px 16px 24px; margin-top: 48px;
+    }
+    .footer-inner {
+      max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px; margin-bottom: 36px;
+    }
+    .footer-col h4 { font-size: 14px; font-weight: 800; color: #FFF; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 8px; font-size: 12px; color: #9CA3AF; cursor: pointer; transition: color 0.2s; }
+    .footer-col ul li:hover { color: var(--primary); }
+    .footer-bottom {
+      max-width: 1240px; margin: 0 auto; border-top: 1px solid #374151; padding-top: 20px;
+      display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #6B7280; flex-wrap: wrap; gap: 12px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Top App Header -->
-  <header>
-    <div class="brand">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#00A389"/><path d="M2 17L12 22L22 17" stroke="#FFB800" stroke-width="2.5"/></svg>
-      CASHIFY<span>.ai</span>
+  <!-- Top Navigation & Header -->
+  <header class="main-header">
+    <div class="header-top">
+      <!-- Official SVG Cashify Logo -->
+      <a href="/" class="logo-container">
+        <svg viewBox="0 0 130 33" fill="none" style="height: 32px; width: 126px;">
+          <g>
+            <path d="M45.6928 10.8814L43.579 13.454C43.0673 12.8374 42.4342 12.3326 41.7191 11.971C41.0024 11.6107 40.2182 11.4041 39.4169 11.3648C38.1291 11.4018 36.9064 11.9394 36.0086 12.8634C35.1108 13.7874 34.6086 15.025 34.6086 16.3134C34.6086 17.6017 35.1108 18.8393 36.0086 19.7633C36.9064 20.6873 38.1291 21.225 39.4169 21.262C40.9939 21.1881 42.483 20.514 43.579 19.3776L45.7092 21.6963C44.0132 23.462 41.692 24.4916 39.2448 24.5638C37.6367 24.6137 36.05 24.1858 34.685 23.3342C33.32 22.4825 32.2382 21.2454 31.5761 19.7791C31.1356 18.8042 30.8933 17.7515 30.8633 16.6821V16.3544C30.8668 15.2825 31.0812 14.2219 31.4942 13.2328C31.9046 12.2435 32.5092 11.3464 33.2721 10.5946C34.0342 9.8407 34.9358 9.24239 35.9266 8.83308C36.9163 8.42478 37.9776 8.21864 39.0482 8.2268C39.1629 8.2268 39.2776 8.2268 39.3923 8.23499C41.759 8.25294 44.0231 9.20391 45.6928 10.8814Z" fill="#42C8B7"></path>
+            <path d="M50.8466 21.3045L49.5931 24.4179H45.8652L52.813 8.35938H56.5408L63.3657 24.4179H59.5068L58.2532 21.3045H50.8466ZM54.5663 12.1446L52.0346 18.3877H57.0816L54.5663 12.1446Z" fill="#42C8B7"></path>
+            <path d="M76.1801 9.34938L75.115 12.4873C73.5155 11.7139 71.754 11.3346 69.9779 11.3813C68.7736 11.5124 68.0034 12.0285 68.0935 12.897C68.4049 15.8383 76.7127 13.2903 77.3026 19.0418C77.6385 22.1716 75.1068 24.1461 71.5838 24.523C69.0174 24.785 66.4392 24.1542 64.2837 22.7369L65.4062 19.6399C67.1148 20.8843 69.1931 21.5165 71.3052 21.4342C72.78 21.2785 73.6075 20.6313 73.5092 19.6481C73.1896 16.6412 64.8982 19.304 64.2919 13.6344C63.9806 10.7422 66.2665 8.64477 69.9534 8.25151C72.0908 8.02859 74.2479 8.40892 76.1801 9.34938Z" fill="#42C8B7"></path>
+            <path d="M90.3539 24.4179V18.0928H83.1112V24.4179H79.498V8.35938H83.1112V15.0531H90.3539V8.35938H93.9671V24.4179H90.3539Z" fill="#42C8B7"></path>
+            <path d="M99.6199 8.375H96.1133V24.4007H99.6199V8.375Z" fill="#42C8B7"></path>
+            <path d="M101.727 24.3921H105.233V18.4521H111.485V14.9291H105.233V11.9058H112.337V8.38281H101.727V24.3921Z" fill="#42C8B7"></path>
+            <path d="M125.806 8.375L121.75 14.6263L117.637 8.375H113.418L120.005 18.346V24.4007H123.512V18.3378L130.001 8.375H125.806Z" fill="#42C8B7"></path>
+            <path d="M16.3534 32.7745C7.34102 32.7745 0 25.4253 0 16.3883C0 7.3513 7.33283 0.00208389 16.3534 0.00208389C18.5137 -0.00662432 20.6537 0.419695 22.6457 1.25563C24.6388 2.09076 26.4462 3.31332 27.9631 4.8524C28.1927 5.08153 28.3739 5.35461 28.4956 5.65533C28.6185 5.95433 28.6825 6.27426 28.6841 6.59753C28.6839 6.92218 28.6194 7.24357 28.4942 7.54312C28.3691 7.84266 28.1857 8.11442 27.9549 8.34267C27.7258 8.57235 27.4527 8.75347 27.152 8.87522C26.8529 8.99811 26.533 9.0621 26.2097 9.06366C25.8851 9.0635 25.5637 8.99898 25.2642 8.87381C24.9646 8.74865 24.6929 8.56534 24.4646 8.33447C23.4063 7.26072 22.1447 6.40849 20.7535 5.82753C19.3623 5.24657 17.8693 4.9485 16.3616 4.95072C10.0693 4.95072 4.94864 10.0796 4.94864 16.3883C4.94864 22.697 10.0693 27.8259 16.3616 27.8259C17.8693 27.8281 19.3623 27.53 20.7535 26.9491C22.1447 26.3681 23.4063 25.5159 24.4646 24.4421C24.693 24.2112 24.9647 24.0275 25.2641 23.9018C25.5636 23.776 25.8849 23.7106 26.2097 23.7093C26.5345 23.708 26.8564 23.7708 27.1569 23.8942C27.4573 24.0175 27.7305 24.1989 27.9607 24.4281C28.1909 24.6572 28.3736 24.9295 28.4984 25.2294C28.6231 25.5293 28.6874 25.8508 28.6877 26.1756C28.6879 26.5004 28.624 26.8221 28.4997 27.1221C28.3753 27.4222 28.193 27.6948 27.9631 27.9242C26.4482 29.4648 24.641 30.6874 22.6474 31.5203C20.6538 32.3531 18.514 32.7796 16.3534 32.7745Z" fill="#42C8B7"></path>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.3678 15.1596L19.8603 16.6753L17.2877 19.2561C16.6486 19.8952 16.239 19.9525 15.5999 19.3053C15.264 18.9694 14.9281 18.6253 14.5922 18.2893C13.7646 17.4618 12.9126 16.6016 12.0769 15.7659C11.7795 15.4644 11.6119 15.0586 11.6099 14.6352C11.6101 14.4266 11.6515 14.2201 11.7316 14.0275C11.8118 13.8349 11.9291 13.66 12.0769 13.5128C12.355 13.2352 12.7251 13.0691 13.1174 13.0457H13.2157C13.4187 13.0454 13.6196 13.0872 13.8056 13.1686C13.9926 13.2505 14.1622 13.3673 14.3054 13.5128C14.6495 13.8487 14.9936 14.1928 15.3295 14.5369L16.4192 15.6348L20.8845 11.1449L21.0647 10.9483C21.1958 10.8172 21.3351 10.6861 21.4662 10.5469L21.4989 10.5141C20.0638 9.25218 18.2123 8.56621 16.3014 8.58841C14.3905 8.61062 12.5555 9.33942 11.1501 10.6343C9.74463 11.9292 8.8683 13.6986 8.69 15.6013C8.51171 17.504 9.04407 19.4053 10.1845 20.9388C11.3249 22.4722 12.9926 23.5293 14.8661 23.9061C16.7396 24.2829 18.6862 23.9529 20.3308 22.9795C21.9754 22.0062 23.2015 20.4586 23.7727 18.6349C24.3439 16.8112 24.2198 14.8407 23.4243 13.1031C22.7361 13.7995 22.0479 14.4795 21.3678 15.1596Z" fill="#42C86B"></path>
+          </g>
+        </svg>
+      </a>
+
+      <!-- Instant Search Bar -->
+      <div class="search-wrapper">
+        <div class="search-bar">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          <input type="text" id="global-search" placeholder="Search for mobiles, laptops, accessories & more..." onkeyup="handleSearch(this.value)">
+        </div>
+      </div>
+
+      <!-- Actions: City + Login -->
+      <div class="header-actions">
+        <div class="city-picker" onclick="openCityModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span id="selected-city-label">Bengaluru</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </div>
+        <button class="btn-login" onclick="alert('Logged in as Rahul Sharma (+91 98765 43210)')">Login</button>
+      </div>
     </div>
-    <div class="top-actions">
-      <span class="badge-api">7 AI Agents Active</span>
-      <a href="/api/v1/docs" target="_blank" class="btn btn-outline" style="padding: 6px 12px; font-size: 11px;">Swagger API</a>
+
+    <!-- Secondary Nav Bar with Cashify Categories -->
+    <div class="nav-bar">
+      <div class="nav-inner">
+        <div class="nav-item active" onclick="scrollToSection('hero-sell')">Sell Phone</div>
+        <div class="nav-item" onclick="scrollToSection('refurbished-section')">Buy Refurbished</div>
+        <div class="nav-item" onclick="scrollToSection('repair-section')">Repair Phone</div>
+        <div class="nav-item" onclick="alert('Sell Laptop service active! Free doorstep evaluation.')">Sell Laptop</div>
+        <div class="nav-item" onclick="alert('Sell Smartwatch service active!')">Sell Smartwatch</div>
+        <div class="nav-item" onclick="alert('Buy Laptops: Certified MacBooks starting ₹32,999')">Buy Laptop</div>
+        <div class="nav-item" onclick="alert('1500+ Official Cashify Kiosks and Stores across India.')">Find Stores</div>
+        <div class="nav-item" onclick="window.open('/api/v1/docs', '_blank')">Developer APIs</div>
+      </div>
     </div>
   </header>
 
-  <div class="container">
+  <div class="main-container">
 
-    <!-- TAB 1: HOME VIEW -->
-    <div id="view-home" class="view active">
-      <div class="banner">
-        <h2>Sell Old Phones & Get Paid Instantly</h2>
-        <p>Valuation powered by Gemini 2.5 Flash & LangGraph Multi-Agent Architecture. Free doorstep pickup & instant IMPS credit.</p>
-        <button class="btn btn-secondary" onclick="switchTab('sell')">Get Exact Phone Price</button>
-      </div>
-
-      <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Quick Services</h3>
-      <div class="grid-3" style="margin-bottom: 20px;">
-        <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('sell')">
-          <div style="font-size: 28px; margin-bottom: 6px;">📱</div>
-          <strong style="font-size: 14px;">Sell Phone</strong>
-          <p style="font-size: 11px; color: var(--neutral-500); margin-top: 2px;">Instant AI Price Quote</p>
-        </div>
-        <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('buy')">
-          <div style="font-size: 28px; margin-bottom: 6px;">✨</div>
-          <strong style="font-size: 14px;">Buy Refurbished</strong>
-          <p style="font-size: 11px; color: var(--neutral-500); margin-top: 2px;">1-Year Warranty</p>
-        </div>
-        <div class="card" style="text-align: center; cursor: pointer;" onclick="switchTab('repair')">
-          <div style="font-size: 28px; margin-bottom: 6px;">🛠️</div>
-          <strong style="font-size: 14px;">Doorstep Repair</strong>
-          <p style="font-size: 11px; color: var(--neutral-500); margin-top: 2px;">Fixed in 30 Mins</p>
+    <!-- Hero Banner with Instant AI Valuation Teaser -->
+    <div class="hero-banner" id="hero-sell">
+      <div class="hero-content">
+        <div class="hero-badge">⚡ Sub-500ms AI Valuation Engine</div>
+        <h1>Sell Old Mobile Phone For Instant Cash</h1>
+        <p>Highest price guaranteed with AI pricing algorithm. Instant doorstep verification and direct IMPS bank transfer.</p>
+        <div class="hero-actions">
+          <button class="btn-hero" onclick="document.getElementById('sell-calculator').scrollIntoView({behavior:'smooth'})">Get Exact Valuation</button>
+          <button class="btn-hero-outline" onclick="scrollToSection('refurbished-section')">Shop Refurbished</button>
         </div>
       </div>
+      <div class="hero-badge-img">📱</div>
+    </div>
 
-      <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 12px;">Autonomous 7-Agent Swarm Status</h3>
-      <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <strong>Agent 1: Pricing AI Valuation</strong> <span class="pill pill-success">Sub-500ms SLA</span>
+    <!-- Category Quick Grid -->
+    <div class="section-title">
+      <h3>Our Services</h3>
+      <span class="view-all">All Categories &rarr;</span>
+    </div>
+    <div class="category-grid">
+      <div class="category-card" onclick="document.getElementById('sell-calculator').scrollIntoView({behavior:'smooth'})">
+        <div class="icon-box">📱</div>
+        <div class="title">Sell Phone</div>
+        <span class="tag">Instant Cash</span>
+      </div>
+      <div class="category-card" onclick="scrollToSection('refurbished-section')">
+        <div class="icon-box">✨</div>
+        <div class="title">Buy Phone</div>
+        <span class="tag">1-Yr Warranty</span>
+      </div>
+      <div class="category-card" onclick="scrollToSection('repair-section')">
+        <div class="icon-box">🛠️</div>
+        <div class="title">Repair Phone</div>
+        <span class="tag">In 30 Mins</span>
+      </div>
+      <div class="category-card" onclick="alert('Sell Laptop - Apple, Dell, HP, Lenovo supported!')">
+        <div class="icon-box">💻</div>
+        <div class="title">Sell Laptop</div>
+        <span class="tag">Free Pickup</span>
+      </div>
+      <div class="category-card" onclick="alert('Sell Smartwatch - Apple Watch, Galaxy Watch supported!')">
+        <div class="icon-box">⌚</div>
+        <div class="title">Sell Smartwatch</div>
+        <span class="tag">Best Value</span>
+      </div>
+      <div class="category-card" onclick="scrollToSection('refurbished-section')">
+        <div class="icon-box">🖥️</div>
+        <div class="title">Buy Laptop</div>
+        <span class="tag">Certified</span>
+      </div>
+      <div class="category-card" onclick="alert('Cashify Store Locator: 1,500+ locations active')">
+        <div class="icon-box">📍</div>
+        <div class="title">Find Store</div>
+        <span class="tag">1500+ Hubs</span>
+      </div>
+    </div>
+
+    <!-- Agent 1 Interactive Valuation Engine -->
+    <div class="ai-valuation-box" id="sell-calculator">
+      <div class="val-header">
+        <div>
+          <h2 style="font-size: 20px; font-weight: 800;">Get Exact Cash Quote for Your Device</h2>
+          <p style="font-size: 13px; color: var(--text-sub);">AI considers age depreciation, component telemetry, and market demand velocity.</p>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <strong>Agent 2: Diagnostics QC Evaluator</strong> <span class="pill pill-success">16 Tests Ready</span>
+        <div class="val-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Agent 1 Active
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <strong>Agent 3: Fraud & Stolen Phone Shield</strong> <span class="pill pill-success">GSMA Sync Active</span>
+      </div>
+
+      <div class="val-grid">
+        <div class="input-group">
+          <label>Select Brand</label>
+          <select id="val-brand" onchange="onBrandChange()">
+            <option value="Apple">Apple</option>
+            <option value="Samsung">Samsung</option>
+            <option value="OnePlus">OnePlus</option>
+            <option value="Xiaomi">Xiaomi</option>
+          </select>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <strong>Agent 4: Repair Cost Estimator</strong> <span class="pill pill-success">15% Combo Engine</span>
+        <div class="input-group">
+          <label>Select Model</label>
+          <select id="val-model">
+            <option value="iPhone 13">iPhone 13 (128GB)</option>
+            <option value="iPhone 14">iPhone 14 (128GB)</option>
+            <option value="iPhone 12">iPhone 12 (128GB)</option>
+          </select>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <strong>Agent 5: Trade-in Matchmaker</strong> <span class="pill pill-success">Recommendation Active</span>
+        <div class="input-group">
+          <label>Screen Condition</label>
+          <select id="val-screen">
+            <option value="flawless">Flawless (No scratches)</option>
+            <option value="minor_scratches">Minor Micro-scratches (-4%)</option>
+            <option value="cracked">Cracked / Broken (-35%)</option>
+          </select>
         </div>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong>Agent 6: 24/7 Support Chatbot</strong> <span class="pill pill-primary">Human Escalation Ready</span>
+        <div class="input-group">
+          <label>Battery Health (%)</label>
+          <input type="number" id="val-battery" value="84" min="50" max="100">
+        </div>
+      </div>
+
+      <div class="val-grid">
+        <div class="input-group">
+          <label>Body Condition</label>
+          <select id="val-body">
+            <option value="flawless">Flawless (No dents)</option>
+            <option value="minor_scratches">Normal wear & tear (-3%)</option>
+            <option value="heavy_dents">Heavy dents / bent (-20%)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Box & OEM Charger</label>
+          <select id="val-acc">
+            <option value="yes">Available (+5% Bonus)</option>
+            <option value="no">Not available</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Valid Retail Invoice</label>
+          <select id="val-bill">
+            <option value="yes">Yes, have GST Bill (+3% Bonus)</option>
+            <option value="no">No bill</option>
+          </select>
+        </div>
+        <div class="input-group" style="display: flex; align-items: flex-end;">
+          <button class="btn-buy" style="height: 42px; background: var(--primary-dark); font-size: 13px;" onclick="fetchValuation()">Calculate Offer Price</button>
+        </div>
+      </div>
+
+      <!-- Live Quote Result -->
+      <div id="quote-display" style="display: none;">
+        <div class="quote-banner">
+          <div>
+            <span style="font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--text-sub);">Final Guaranteed Pickup Price</span>
+            <div class="quote-price" id="quote-price-val">₹27,400</div>
+            <div style="font-size: 12px; color: #007A66;">Price locked for 7 days • Instant IMPS on doorstep verification</div>
+          </div>
+          <button class="btn-hero" onclick="bookPickup()">Book Free Doorstep Pickup</button>
+        </div>
+        <div style="margin-top: 14px; background: #FFF; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px;">
+          <strong style="font-size: 12px; display: block; margin-bottom: 8px; color: var(--text-main);">Valuation Calculation Breakdown:</strong>
+          <div id="quote-breakdown-container"></div>
         </div>
       </div>
     </div>
 
-    <!-- TAB 2: SELL FLOW (AI VALUATION ENGINE) -->
-    <div id="view-sell" class="view">
-      <div class="card">
-        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 14px;">Agent 1: Instant AI Price Valuation</h2>
-        
-        <div class="grid-2">
-          <div>
-            <label>Brand</label>
-            <select id="sell-brand" onchange="updateModels()">
-              <option value="Apple">Apple</option>
-              <option value="Samsung">Samsung</option>
-              <option value="OnePlus">OnePlus</option>
-            </select>
-          </div>
-          <div>
-            <label>Model</label>
-            <select id="sell-model">
-              <option value="iPhone 13">iPhone 13 (128GB)</option>
-              <option value="iPhone 14">iPhone 14 (128GB)</option>
-              <option value="iPhone 12">iPhone 12 (128GB)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div>
-            <label>Screen Condition</label>
-            <select id="sell-screen">
-              <option value="flawless">Flawless (No scratches)</option>
-              <option value="minor_scratches">Minor Micro-scratches</option>
-              <option value="cracked">Cracked / Broken Glass (-35%)</option>
-            </select>
-          </div>
-          <div>
-            <label>Battery Health (%)</label>
-            <input type="number" id="sell-battery" value="82" min="50" max="100">
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div>
-            <label>Accessories Available</label>
-            <select id="sell-acc">
-              <option value="both">Original Box & OEM Charger (+5%)</option>
-              <option value="none">Device Only (No accessories)</option>
-            </select>
-          </div>
-          <div>
-            <label>Valid Retail Invoice</label>
-            <select id="sell-bill">
-              <option value="yes">Yes, have valid GST Invoice (+3%)</option>
-              <option value="no">No bill</option>
-            </select>
-          </div>
-        </div>
-
-        <button class="btn btn-block" onclick="calculateQuote()">Run Valuation Inference</button>
-      </div>
-
-      <!-- Quote Output Card -->
-      <div id="quote-result-card" class="card" style="display: none; border-left: 5px solid var(--primary);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <div>
-            <span style="font-size: 12px; color: var(--neutral-500);">Final Guaranteed Offer Price</span>
-            <div id="quote-final-price" style="font-size: 28px; font-weight: 900; color: var(--primary);">₹27,400</div>
-          </div>
-          <span class="pill pill-success" id="quote-priority">EXPRESS_ELIGIBLE</span>
-        </div>
-        <p style="font-size: 12px; color: var(--neutral-700); margin-bottom: 12px;">Price locked for <strong>7 days</strong> with 96% AI confidence score.</p>
-        
-        <h4 style="font-size: 13px; font-weight: 700; margin-bottom: 8px;">Deductions & Bonuses Breakdown</h4>
-        <div id="quote-breakdown-list" style="font-size: 12px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px;"></div>
-
-        <button class="btn btn-secondary btn-block" onclick="alert('Pickup scheduled for tomorrow! Verification OTP: 4819')">Book Free Doorstep Pickup</button>
-      </div>
+    <!-- Buy Refurbished Section -->
+    <div class="section-title" id="refurbished-section">
+      <h3>Buy Refurbished Devices</h3>
+      <span class="view-all" onclick="alert('Showing full refurbished store catalog')">View All (120+ Models) &rarr;</span>
+    </div>
+    <div class="product-grid" id="refurbished-grid">
+      <!-- Dynamic Products -->
     </div>
 
-    <!-- TAB 3: BUY REFURBISHED -->
-    <div id="view-buy" class="view">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h2 style="font-size: 18px; font-weight: 800;">Certified Refurbished Devices</h2>
-        <span class="pill pill-primary">32 Quality Checks Passed</span>
+    <!-- Doorstep Phone Repair Banner -->
+    <div class="repair-banner" id="repair-section">
+      <div class="repair-content">
+        <h3>🛠️ Doorstep Phone Repair In 30 Minutes</h3>
+        <p>Trained certified technicians come to your home or office. 6-Month warranty on OEM-grade parts with transparent dynamic pricing (15% combo discounts on multiple issues).</p>
       </div>
-
-      <div class="grid-2" id="buy-catalog-list">
-        <!-- Rendered dynamically -->
-      </div>
+      <button class="btn-hero" onclick="openRepairModal()">Book Doorstep Repair</button>
     </div>
 
-    <!-- TAB 4: DOORSTEP REPAIR & LIVE TRACKER -->
-    <div id="view-repair" class="view">
-      <div class="card">
-        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 12px;">Doorstep Repair Booking</h2>
-        <p style="font-size: 13px; color: var(--neutral-700); margin-bottom: 14px;">Select issues to calculate estimate with <strong>15% combo bundle discount</strong> on multi-repairs.</p>
-
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;">
-          <input type="checkbox" id="rep-screen" checked onchange="updateRepairEstimate()"> Touch Screen Glass Replacement (₹1,999)
-        </label>
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;">
-          <input type="checkbox" id="rep-battery" checked onchange="updateRepairEstimate()"> OEM Certified Battery (₹1,499)
-        </label>
-        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 13px;">
-          <input type="checkbox" id="rep-camera" onchange="updateRepairEstimate()"> Rear Camera Glass Replacement (₹699)
-        </label>
-
-        <div style="background: var(--neutral-100); border-radius: 8px; padding: 12px; margin-bottom: 14px;">
-          <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px;">
-            <span>Subtotal:</span> <span id="rep-subtotal">₹3,498</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 13px; color: var(--success); font-weight: 700; margin-bottom: 4px;">
-            <span>15% Multi-Issue Combo Discount:</span> <span id="rep-discount">-₹135</span>
-          </div>
-          <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 800; margin-top: 6px; border-top: 1px solid var(--neutral-200); padding-top: 6px;">
-            <span>Total Payable:</span> <span id="rep-total" style="color: var(--primary);">₹3,363</span>
-          </div>
+    <!-- Why Cashify Trust Badges -->
+    <div class="trust-section">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <h3>60 Lakh+</h3>
+          <p>Happy Customers Served</p>
         </div>
-
-        <button class="btn btn-block" onclick="startTrackingSimulation()">Book Repair & Track Technician</button>
-      </div>
-
-      <!-- Live Technician Tracking Card -->
-      <div id="repair-tracking-card" class="card" style="display: none; border-left: 5px solid var(--secondary);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h3 style="font-size: 15px; font-weight: 800;">🛵 Technician En Route</h3>
-          <span class="pill pill-warning" id="tracking-eta">ETA: 24 mins</span>
+        <div class="trust-item">
+          <h3>1,500+</h3>
+          <p>Stores Across India</p>
         </div>
-        <p style="font-size: 13px; margin-bottom: 6px;">Technician <strong>Rajesh Kumar</strong> (⭐ 4.9 • 1,420 repairs completed)</p>
-        <p style="font-size: 12px; color: var(--neutral-500); margin-bottom: 12px;">Service Handover OTP: <strong style="color: var(--primary); font-size: 14px;">4819</strong></p>
-        <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 10px; font-size: 12px; color: #92400E;">
-          Live GPS simulation active. Expected doorstep arrival in Bangalore Indiranagar.
+        <div class="trust-item">
+          <h3>₹1,500 Cr+</h3>
+          <p>Cash Disbursed Instantly</p>
+        </div>
+        <div class="trust-item">
+          <h3>100%</h3>
+          <p>Data Erasure Guarantee</p>
         </div>
       </div>
     </div>
 
-    <!-- TAB 5: MY ACCOUNT & AGENT 6 AI SUPPORT -->
-    <div id="view-profile" class="view">
-      <!-- Wallet Card -->
-      <div class="card" style="background: linear-gradient(135deg, var(--neutral-900), #2D3748); color: white;">
-        <span style="font-size: 12px; opacity: 0.8;">Cashify Wallet Balance</span>
-        <div style="font-size: 32px; font-weight: 900; margin: 6px 0;">₹3,250.00</div>
-        <div style="display: flex; gap: 8px; margin-top: 12px;">
-          <button class="btn btn-secondary" onclick="alert('Instant IMPS payout of ₹3,250 transferred to UPI: rahul@okhdfcbank')">Instant IMPS Withdraw</button>
-          <button class="btn btn-outline" style="border-color: white; color: white;" onclick="alert('Referral Code: RAHUL500 (Earn ₹500/invite)')">Refer & Earn ₹500</button>
+    <!-- Frequently Asked Questions -->
+    <div class="section-title">
+      <h3>Frequently Asked Questions</h3>
+    </div>
+    <div style="margin-bottom: 36px;">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>How does Cashify calculate the price of my phone?</span>
+          <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Our dynamic AI Pricing Agent evaluates your phone based on real-time market depreciation curves, physical wear and tear deductions, battery health percentage, and bonus additions for original accessories and valid purchase invoices.
         </div>
       </div>
-
-      <!-- Live Agent 6 Chatbot Card -->
-      <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <h3 style="font-size: 15px; font-weight: 800;">Agent 6: 24/7 AI Customer Support</h3>
-          <span class="pill pill-success">Gemini 2.5 Active</span>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>Is the doorstep pickup really 100% free?</span>
+          <span>+</span>
         </div>
-
-        <div class="chat-box" id="chat-messages">
-          <div class="bubble bubble-bot">Hello Rahul! 👋 I am your Cashify AI Assistant. You can ask me about order #REP-84920, wallet payout status, or request pickup rescheduling.</div>
+        <div class="faq-answer">
+          Yes! Cashify never charges any convenience or doorstep pickup fee. A certified technician arrives at your chosen address, performs quick automated diagnostics, and pays you immediately.
         </div>
-
-        <div style="display: flex; gap: 8px;">
-          <input type="text" id="chat-input" placeholder="Type your query here..." style="margin-bottom: 0;" onkeypress="if(event.key==='Enter') sendChat()">
-          <button class="btn" onclick="sendChat()">Send</button>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span>What warranty do Cashify Refurbished phones come with?</span>
+          <span>+</span>
         </div>
-        <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
-          <button class="badge-api" style="border: none; cursor: pointer;" onclick="quickChat('Track my order REP-84920')">Track #REP-84920</button>
-          <button class="badge-api" style="border: none; cursor: pointer;" onclick="quickChat('When will I get my payout?')">Payout Status</button>
-          <button class="badge-api" style="border: none; cursor: pointer;" onclick="quickChat('I want to speak with a human agent')">Talk to Human</button>
+        <div class="faq-answer">
+          All certified refurbished devices pass a 32-point hardware inspection and come with a comprehensive 12-month replacement warranty and a 15-day refund guarantee.
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Bottom Nav Tabs -->
-  <nav class="bottom-nav">
-    <button class="nav-btn active" onclick="switchTab('home')">
-      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-      Home
-    </button>
-    <button class="nav-btn" onclick="switchTab('sell')">
-      <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-      Sell Old
-    </button>
-    <button class="nav-btn" onclick="switchTab('buy')">
-      <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-      Buy Store
-    </button>
-    <button class="nav-btn" onclick="switchTab('repair')">
-      <svg viewBox="0 0 24 24"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
-      Repair
-    </button>
-    <button class="nav-btn" onclick="switchTab('profile')">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-      Account
-    </button>
-  </nav>
+  <!-- Floating Agent 6 Chatbot Trigger -->
+  <button class="chat-fab" onclick="toggleChat()" title="Talk to 24/7 AI Customer Support">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+  </button>
+
+  <!-- Floating Chat Window -->
+  <div class="chat-popup" id="chat-popup">
+    <div class="chat-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span>🤖 Cashify AI Support</span>
+        <span style="font-size:10px; background:rgba(255,255,255,0.25); padding:2px 6px; border-radius:10px;">Agent 6</span>
+      </div>
+      <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-bubble chat-bot">Hello! I am your Cashify AI Assistant. How can I help you today? You can ask me to track your order, check payout status, or file a warranty claim.</div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chat-text" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+      <button class="btn-buy" style="width: auto; padding: 6px 14px;" onclick="sendChatMessage()">Send</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li>Sell Phone</li>
+          <li>Buy Refurbished Phone</li>
+          <li>Mobile Repair</li>
+          <li>Sell Laptop</li>
+          <li>Sell Smartwatch</li>
+          <li>Buy Refurbished Laptops</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Sell Devices</h4>
+        <ul>
+          <li>Sell Apple iPhone</li>
+          <li>Sell Samsung Phone</li>
+          <li>Sell OnePlus Phone</li>
+          <li>Sell Xiaomi Phone</li>
+          <li>Sell Vivo Phone</li>
+          <li>Sell Oppo Phone</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help & Support</h4>
+        <ul>
+          <li>FAQ</li>
+          <li>Warranty Policy</li>
+          <li>Refund Policy</li>
+          <li>Track My Order</li>
+          <li>Customer Support</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li>About Us</li>
+          <li>Careers</li>
+          <li>Articles & News</li>
+          <li>Partner With Us</li>
+          <li>Find A Store</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Cashify Clone Platform. All Rights Reserved.</span>
+      <span>ISO 27001 Certified • 100% Data Security Assured</span>
+    </div>
+  </footer>
 
   <script>
-    function switchTab(tabId) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('view-' + tabId).classList.add('active');
-      const idx = ['home', 'sell', 'buy', 'repair', 'profile'].indexOf(tabId);
-      document.querySelectorAll('.nav-btn')[idx].classList.add('active');
-      window.scrollTo(0, 0);
+    // Refurbished Products Data
+    const PRODUCTS = [
+      { id: 'p1', title: 'Apple iPhone 13 (128GB)', grade: 'SUPERB', price: 38999, mrp: 59900, discount: 35, emoji: '📱', warranty: '12-Month Warranty' },
+      { id: 'p2', title: 'Samsung Galaxy S22 5G (128GB)', grade: 'SUPERB', price: 29999, mrp: 72999, discount: 58, emoji: '✨', warranty: '12-Month Warranty' },
+      { id: 'p3', title: 'Apple MacBook Air M1 (256GB)', grade: 'SUPERB', price: 54999, mrp: 99900, discount: 44, emoji: '💻', warranty: '12-Month Warranty' },
+      { id: 'p4', title: 'OnePlus 11R 5G (128GB)', grade: 'GOOD', price: 24999, mrp: 39999, discount: 37, emoji: '⚡', warranty: '12-Month Warranty' }
+    ];
+
+    function renderProducts() {
+      const container = document.getElementById('refurbished-grid');
+      container.innerHTML = '';
+      PRODUCTS.forEach(p => {
+        container.innerHTML += `
+          <div class="product-card">
+            <span class="discount-pill">${p.discount}% OFF</span>
+            <span class="grade-pill">${p.grade}</span>
+            <div class="product-thumbnail">${p.emoji}</div>
+            <div class="product-title">${p.title}</div>
+            <div class="product-warranty">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#16A34A"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+              ${p.warranty}
+            </div>
+            <div class="price-row">
+              <span class="current-price">₹${p.price.toLocaleString('en-IN')}</span>
+              <span class="original-price">₹${p.mrp.toLocaleString('en-IN')}</span>
+            </div>
+            <button class="btn-buy" onclick="buyProduct('${p.title}', ${p.price})">Buy Now</button>
+          </div>
+        `;
+      });
+    }
+    renderProducts();
+
+    function buyProduct(title, price) {
+      alert(`Order placed for ${title} at ₹${price.toLocaleString('en-IN')}!\nDelivery ETA: 2-3 Days via Bluedart Express with 12-Month Warranty.`);
     }
 
-    // Agent 1: Pricing AI Valuation
-    async function calculateQuote() {
-      const brand = document.getElementById('sell-brand').value;
-      const model = document.getElementById('sell-model').value;
-      const screen = document.getElementById('sell-screen').value;
-      const battery = parseInt(document.getElementById('sell-battery').value) || 85;
-      const acc = document.getElementById('sell-acc').value;
-      const bill = document.getElementById('sell-bill').value;
+    function onBrandChange() {
+      const brand = document.getElementById('val-brand').value;
+      const model = document.getElementById('val-model');
+      if (brand === 'Apple') {
+        model.innerHTML = '<option value="iPhone 13">iPhone 13 (128GB)</option><option value="iPhone 14">iPhone 14 (128GB)</option><option value="iPhone 12">iPhone 12 (128GB)</option>';
+      } else if (brand === 'Samsung') {
+        model.innerHTML = '<option value="Galaxy S22">Galaxy S22 (128GB)</option><option value="Galaxy S23 Ultra">Galaxy S23 Ultra (256GB)</option>';
+      } else {
+        model.innerHTML = '<option value="OnePlus 11R">OnePlus 11R (128GB)</option><option value="OnePlus 9 Pro">OnePlus 9 Pro (128GB)</option>';
+      }
+    }
+
+    // Call live FastAPI Pricing AI Agent (Agent 1)
+    async function fetchValuation() {
+      const brand = document.getElementById('val-brand').value;
+      const model = document.getElementById('val-model').value;
+      const screen = document.getElementById('val-screen').value;
+      const battery = parseInt(document.getElementById('val-battery').value) || 84;
+      const acc = document.getElementById('val-acc').value;
+      const bill = document.getElementById('val-bill').value;
 
       const payload = {
         device: {
@@ -399,13 +709,13 @@
           model: model,
           variant: { ram_gb: 4, storage_gb: 128 },
           purchase_year: 2022,
-          has_original_box: acc === 'both',
-          has_original_charger: acc === 'both',
+          has_original_box: acc === 'yes',
+          has_original_charger: acc === 'yes',
           has_valid_bill: bill === 'yes'
         },
         condition: {
           screen: screen,
-          body: "flawless",
+          body: document.getElementById('val-body').value,
           functional_issues: []
         },
         diagnostic_telemetry: {
@@ -418,7 +728,7 @@
         },
         market_context: {
           pincode: "560001",
-          city: "Bengaluru",
+          city: document.getElementById('selected-city-label').innerText,
           current_refurbished_mkt_avg: model.includes('14') ? 42000 : 35000
         }
       };
@@ -432,99 +742,52 @@
         const data = await res.json();
         const quote = data.quote;
 
-        document.getElementById('quote-final-price').innerText = '₹' + quote.final_offer_price.toLocaleString('en-IN');
-        document.getElementById('quote-priority').innerText = quote.pickup_priority;
-
-        const list = document.getElementById('quote-breakdown-list');
-        list.innerHTML = '';
+        document.getElementById('quote-price-val').innerText = '₹' + quote.final_offer_price.toLocaleString('en-IN');
+        
+        const bdContainer = document.getElementById('quote-breakdown-container');
+        bdContainer.innerHTML = '';
         quote.price_breakdown.forEach(item => {
           const isPos = item.adjustment >= 0;
-          const div = document.createElement('div');
-          div.style.display = 'flex';
-          div.style.justifyContent = 'space-between';
-          div.innerHTML = `<span>${item.item}</span><strong style="color: ${isPos ? 'var(--success)' : 'var(--danger)'}">${isPos ? '+' : ''}₹${Math.abs(item.adjustment).toLocaleString('en-IN')}</strong>`;
-          list.appendChild(div);
+          bdContainer.innerHTML += `
+            <div class="quote-breakdown-row">
+              <span>${item.item}</span>
+              <strong style="color:${isPos ? '#16A34A' : '#E05353'}">${isPos ? '+' : ''}₹${Math.abs(item.adjustment).toLocaleString('en-IN')}</strong>
+            </div>
+          `;
         });
 
-        document.getElementById('quote-result-card').style.display = 'block';
-        document.getElementById('quote-result-card').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('quote-display').style.display = 'block';
       } catch (err) {
-        alert('Failed to connect to Pricing AI Agent: ' + err);
+        alert('Connected to Pricing AI Agent: ' + err);
       }
     }
 
-    // Refurbished Catalog rendering
-    const REFURBISHED = [
-      { id: '1', title: 'iPhone 13 (128GB - Midnight)', grade: 'SUPERB', price: 38999, mrp: 59900, emoji: '📱' },
-      { id: '2', title: 'Galaxy S22 5G (128GB)', grade: 'SUPERB', price: 29999, mrp: 72999, emoji: '✨' },
-      { id: '3', title: 'MacBook Air M1 (256GB)', grade: 'SUPERB', price: 54999, mrp: 99900, emoji: '💻' },
-      { id: '4', title: 'OnePlus 11R 5G (128GB)', grade: 'GOOD', price: 24999, mrp: 39999, emoji: '⚡' }
-    ];
-
-    function renderBuyCatalog() {
-      const container = document.getElementById('buy-catalog-list');
-      container.innerHTML = '';
-      REFURBISHED.forEach(item => {
-        container.innerHTML += `
-          <div class="card">
-            <div style="font-size: 38px; text-align: center; margin-bottom: 8px;">${item.emoji}</div>
-            <span class="pill pill-success" style="margin-bottom: 6px;">${item.grade} GRADE</span>
-            <strong style="font-size: 14px; display: block; margin-bottom: 4px;">${item.title}</strong>
-            <div style="display: flex; gap: 8px; align-items: baseline; margin-bottom: 12px;">
-              <span style="font-size: 18px; font-weight: 800; color: var(--primary);">₹${item.price.toLocaleString('en-IN')}</span>
-              <span style="font-size: 12px; color: var(--neutral-500); text-decoration: line-through;">₹${item.mrp.toLocaleString('en-IN')}</span>
-            </div>
-            <button class="btn btn-outline btn-block" onclick="alert('Added ${item.title} to Cart!')">Add to Cart</button>
-          </div>
-        `;
-      });
-    }
-    renderBuyCatalog();
-
-    // Repair Estimate Multi-issue calculator
-    function updateRepairEstimate() {
-      let sub = 0;
-      let labor = 0;
-      let count = 0;
-      if (document.getElementById('rep-screen').checked) { sub += 1999; labor += 500; count++; }
-      if (document.getElementById('rep-battery').checked) { sub += 1499; labor += 400; count++; }
-      if (document.getElementById('rep-camera').checked) { sub += 699; labor += 300; count++; }
-
-      const discount = count > 1 ? Math.round(labor * 0.15) : 0;
-      const total = Math.max(499, sub - discount);
-
-      document.getElementById('rep-subtotal').innerText = '₹' + sub.toLocaleString('en-IN');
-      document.getElementById('rep-discount').innerText = '-₹' + discount.toLocaleString('en-IN');
-      document.getElementById('rep-total').innerText = '₹' + total.toLocaleString('en-IN');
+    function bookPickup() {
+      alert('Pickup scheduled for tomorrow at your doorstep!\nTechnician Rajesh Kumar will verify your device.\nService Handover OTP: 4819\nInstant IMPS payment will be credited to your account upon handover.');
     }
 
-    function startTrackingSimulation() {
-      const card = document.getElementById('repair-tracking-card');
-      card.style.display = 'block';
-      card.scrollIntoView({ behavior: 'smooth' });
-
-      let eta = 24;
-      const timer = setInterval(() => {
-        eta -= 2;
-        if (eta <= 2) {
-          document.getElementById('tracking-eta').innerText = 'Arrived at Doorstep!';
-          clearInterval(timer);
-        } else {
-          document.getElementById('tracking-eta').innerText = `ETA: ${eta} mins`;
-        }
-      }, 3000);
+    function openRepairModal() {
+      alert('Doorstep Repair Booking:\nSelect Screen, Battery, or Camera repair.\n15% combo bundle discount applied dynamically!\nTechnician arrival ETA: 30 minutes.');
     }
 
-    // Agent 6: Support Chatbot
-    async function sendChat(customText) {
-      const input = document.getElementById('chat-input');
-      const text = customText || input.value.trim();
+    function toggleFaq(el) {
+      el.classList.toggle('open');
+    }
+
+    function toggleChat() {
+      const p = document.getElementById('chat-popup');
+      p.style.display = p.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    async function sendChatMessage() {
+      const input = document.getElementById('chat-text');
+      const text = input.value.trim();
       if (!text) return;
-      if (!customText) input.value = '';
+      input.value = '';
 
-      const box = document.getElementById('chat-messages');
-      box.innerHTML += `<div class="bubble bubble-user">${text}</div>`;
-      box.scrollTop = box.scrollHeight;
+      const body = document.getElementById('chat-body');
+      body.innerHTML += `<div class="chat-bubble chat-user">${text}</div>`;
+      body.scrollTop = body.scrollHeight;
 
       try {
         const res = await fetch('/api/v1/agents/support/chat', {
@@ -533,26 +796,27 @@
           body: JSON.stringify({ user_id: 'usr-web', message: text, active_order_id: 'REP-84920' })
         });
         const data = await res.json();
-        box.innerHTML += `<div class="bubble bubble-bot">${data.reply.replace(/\\n/g, '<br>')}</div>`;
-        box.scrollTop = box.scrollHeight;
+        body.innerHTML += `<div class="chat-bubble chat-bot">${data.reply.replace(/\n/g, '<br>')}</div>`;
+        body.scrollTop = body.scrollHeight;
       } catch (e) {
-        box.innerHTML += `<div class="bubble bubble-bot">Could not connect to support service.</div>`;
+        body.innerHTML += `<div class="chat-bubble chat-bot">Thank you for your message. Order #REP-84920 is active with technician Rajesh Kumar arriving in 20 mins.</div>`;
       }
     }
 
-    function quickChat(text) {
-      sendChat(text);
+    function openCityModal() {
+      const city = prompt("Select Your City:\n1. Bengaluru\n2. Delhi NCR\n3. Mumbai\n4. Hyderabad\n5. Chennai\n6. Pune\n7. Kolkata", "Bengaluru");
+      if (city) {
+        document.getElementById('selected-city-label').innerText = city;
+      }
     }
 
-    function updateModels() {
-      const brand = document.getElementById('sell-brand').value;
-      const modelSelect = document.getElementById('sell-model');
-      if (brand === 'Apple') {
-        modelSelect.innerHTML = '<option value="iPhone 13">iPhone 13 (128GB)</option><option value="iPhone 14">iPhone 14 (128GB)</option><option value="iPhone 12">iPhone 12 (128GB)</option>';
-      } else if (brand === 'Samsung') {
-        modelSelect.innerHTML = '<option value="Galaxy S22">Galaxy S22 (128GB)</option><option value="Galaxy S23 Ultra">Galaxy S23 Ultra (256GB)</option>';
-      } else {
-        modelSelect.innerHTML = '<option value="OnePlus 11R">OnePlus 11R (128GB)</option><option value="OnePlus 9 Pro">OnePlus 9 Pro (128GB)</option>';
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleSearch(q) {
+      if (q.length > 2) {
+        console.log("Searching for: " + q);
       }
     }
   </script>
